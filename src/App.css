@@ -1,39 +1,80 @@
 #root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
+  width: 65%;
+  height: 65%;
+  margin: auto;
+  padding: 10px 10px 5px 10px;
   text-align: center;
+  background-color: rgb(161, 243, 216);
+  font-family: 'Trebuchet MS';
+  border-radius: 10px;
+}
+
+/*Bank Logo*/
+.bankLogo {
+  border-radius: 25px 0 20px 0;
+  margin: 0;
+  padding: 10px 0 0 0;
+  width: 77px;
+  height: 77px;
 }
 
 /*For the Login Page*/
+.loginForm {
+  padding: 5px 5px 20px 5px;
+  text-align: center;
+}
+
 header {
   text-align: center;
-  color: rgb(17, 179, 179);
-  font-size: 20pt;
+  color: rgb(18, 167, 167);
+  text-shadow: 5px 0 2px rgb(28, 74, 92);
+  font-size: 25pt;
   font-weight: bold;
 }
 
-p {
+.bankTagline {
   font-style: italic;
   font-size: 9pt;
   font-family: 'Cambria';
   font-weight: bold;
+  padding-bottom: 44px;
 }
 
 label {
-  font-size: 11pt;
+  font-size: 10pt;
   font-weight: bold;
 }
 
 input {
   border-radius: 5px;
   border: 1px solid rgb(19, 114, 82);
-  font-size: 11pt;
+  font-size: 9pt;
+  padding: 3px;
+  font-weight: bold;
+  font-family: 'Trebuchet MS';
 }
 
-footer {
+.signInButton{
+  border: transparent;
+  border-radius: 7px 0 7px 0;
+  background-color:rgb(24, 207, 198);
+  font-size: 9pt;
+  font-family: 'Cambria';
+  font-weight: bold;
+}
+
+.signUp {
+  font-size: 9pt;
+  font-family: 'Cambria';
+  font-weight: bold;
+  margin: 0;
+  padding: 15px 0 20px 0;
+}
+
+.footerContainer {
   font-size: 9pt;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  padding: 15px 0 0 0;
 }
