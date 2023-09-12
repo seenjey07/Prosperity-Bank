@@ -1,46 +1,66 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Input from "./Input";
-
 
 const LoginPage = () => {
 	const [username, setUsername] = useState ('');
 	const [password, setPassword] = useState ('');
+	const [error, setError] = useState(null);
+	const navigate = useNavigate();
 
-	const onUsernameChange = (e) => setUsername(e.target.value)
-	const onPasswordChange = (e) => setPassword(e.target.value)
+	const onUsernameChange = (e) => setUsername(e.target.value);
+	const onPasswordChange = (e) => setPassword(e.target.value);
 
-	const handleSubmitButton = (e) => {
+	const handleLogin = (e) => {
 		e.preventDefault();
-		console.log('Logging in ', username);
-	}
+
+		const savedUserInfo = JSON.parse(localStorage.getItem('savedUserInfo'));
+		const setLoggedInUser = savedUserInfo;
+
+		if (savedUserInfo && username === savedUserInfo.username && password === savedUserInfo.password) {
+			setError(null);
+				setLoggedInUser(savedUserInfo);
+				console.log('Redirect to Dashboard');
+				navigate('/dashboard');
+		} else {
+				setUsername('');
+				setPassword('');
+				setError('Invalid username or password. Please try again.');
+		}
+	};
 
 	return (
-		<>
-		<form className="loginForm">
+		<div>
+			<form className="loginForm" onSubmit={handleLogin}>
+				<Input
+					key="username"
+					label="Username"
+					type="text"
+					id="username"
+					value={username}
+					onChange={onUsernameChange}
+					required
+				/> 
+				<br /><br />
 
-			<Input
-				key="username"
-				label="Username"
-				type="text"
-				id="username"
-				value={username}
-				onChange={onUsernameChange} /> <br /><br />
+				<Input
+					key="password"
+					label="Password"
+					type="password"
+					id="password"
+					value={password}
+					onChange={onPasswordChange}
+					required
+				/> 
+				<br /><br />
 
-			<Input
-				key="password"
-				label="Password"
-				type="password"
-				id="password"
-				value={password}
-				onChange={onPasswordChange} /> <br /><br />
+				{error && <p className="error">{error}</p>}
 
-			<button className="signInButton" type="submit" onClick={handleSubmitButton}>Sign in</button>
-		</form>
-		
-		<p className="signUp">Don't have an account yet? <br /> <Link to="./components/SignUpPage">Sign up</Link>!</p>
-		</>
+				<button className="loginButton" type="submit">Login</button>
+			</form>
 
+				<h5 className="loginLink">Don't have an account yet? <br /><Link to="/signup">Sign up</Link>!</h5>
+		</div>
 	);
 }
   

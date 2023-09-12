@@ -1,16 +1,17 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import Input from "./Input";
 
 const SignUpPage = () => {
-	const [surname, setSurname] = useState ('');
-	const [firstName, setFirstName] = useState ('');
-	const [middleName, setMiddleName] = useState ('');
-	const [birthday, setBirthday] = useState ('');
-	const [username, setUsername] = useState ('');
-	const [password, setPassword] = useState ('');
-	const [confirmPassword, setConfirmPassword] = useState ('');
+	const [surname, setSurname] = useState('');
+	const [firstName, setFirstName] = useState('');
+	const [middleName, setMiddleName] = useState('');
+	const [birthday, setBirthday] = useState('');
+	const [username, setUsername] = useState('');
+	const [password, setPassword] = useState('');
+	const [confirmPassword, setConfirmPassword] = useState('');
 	const [mobileNumber, setMobileNumber] = useState ('');
-	const [email, setEmail] = useState ('');
+	const [email, setEmail] = useState('');
 
 	const onSurnameChange = (e) => setSurname(e.target.value);
 	const onFirstNameChange = (e) => setFirstName(e.target.value);
@@ -29,90 +30,122 @@ const SignUpPage = () => {
 
 	return (
 		<div>
-			<h2>Online Banking Enrollment</h2>
-				<h4>Please complete the registration form below:</h4>
+			<h2 className="onlineBankEnrollment">Online Banking Enrollment</h2>
+			<h5 className="completeRegBelow">Please complete the registration form below:</h5>
+						
 				<form className="signUpContainer">
-					
-			<Input
-				key="surname"
-				label="Surname"
-				type="text"
-				id="surname"
-				value={surname}
-				onChange={onSurnameChange} /> <br />
-		
-			<Input
-				key="firstName"
-				label="First Name"
-				type="text"
-				id="firstName"
-				value={firstName}
-				onChange={onFirstNameChange} /> <br />
-		
-			<Input
-				key="middleName"
-				label="Middle Name"
-				type="text"
-				id="middleName"
-				value={middleName}
-				onChange={onMiddleNameChange} /> <br />
-		
-			<Input
-				key="birthday"
-				label="Date of Birth"
-				type="text"
-				id="birthday"
-				value={birthday}
-				onChange={onBirthdayChange} /> <br />
+				
+					<Input
+						key="surname"
+						label="Surname"
+						type="text"
+						id="surname"
+						value={surname} 
+						onChange={onSurnameChange}
+						required 
+					/> 
+					<br />
+				
+					<Input
+						key="firstName"
+						label="First Name"
+						type="text"
+						id="firstName"
+						value={firstName}
+						onChange={onFirstNameChange}
+						required
+					/> 
+					<br />
+				
+					<Input
+						key="middleName"
+						label="Middle Name"
+						type="text"
+						id="middleName"
+						value={middleName}
+						onChange={onMiddleNameChange}
+						required
+					/> 
+					<br />
+				
+					<Input
+						key="birthday"
+						label="Date of Birth"
+						type="date"
+						id="birthday"
+						value={birthday}
+						onChange={onBirthdayChange}
+						required
+					/>
+					<br /><br />
 
+					<h5 className="setOnlineBankInfo">Nominate your Online Banking Information:</h5>
 
-			<p className="registerBankingInfoText">Nominate yout Online Banking Information</p>
+					<Input
+						key="username"
+						label="Username"
+						type="text"
+						id="username"
+						value={username}
+						onChange={onUsernameChange}
+						required
+					/>
+					<br />
 
-			<Input
-				key="username"
-				label="Username"
-				type="text"
-				id="username"
-				value={username}
-				onChange={onUsernameChange} /> <br />
+					<Input
+						key="password"
+						label="Password"
+						type="password"
+						id="password"
+						value={password}
+						onChange={onPasswordChange}
+						required
+					/>
+					<br />
 
-			<Input
-				key="password"
-				label="Password"
-				type="password"
-				id="password"
-				value={password}
-				onChange={onPasswordChange} /> <br />
+					<Input
+						key="confirmPassword"
+						label="Confirm Password"
+						type="password"
+						id="confirmPassword"
+						value={confirmPassword}
+						onChange={onConfirmPasswordChange}
+						required
+					/>
+					<br />
 
-			<Input
-				key="confirmPassword"
-				label="Confirm Password"
-				type="password"
-				id="confirmPassword"
-				value={confirmPassword}
-				onChange={onConfirmPasswordChange} /> <br />
+					<Input
+						key="mobileNumber"
+						label="Mobile Number"
+						type="text"
+						id="mobileNumber"
+						value={mobileNumber}
+						onChange={onMobileNumberChange}
+						required
+					/>
+					<br />
 
-			<Input
-				key="mobileNumber"
-				label="Mobile Number"
-				type="text"
-				id="mobileNumber"
-				value={mobileNumber}
-				onChange={onMobileNumberChange} /> <br />
+					<Input
+						key="email"
+						label="Email Address"
+						type="email"
+						id="email"
+						value={email}
+						onChange={onEmailChange}
+						required 
+					/>
+					<br /><br />
 
-			<Input
-				key="email"
-				label="Email Address"
-				type="email"
-				id="email"
-				value={email}
-				onChange={onEmailChange} /> <br />
+					{/* <div>
+						<img className="cartoonWithCard" src="src/assets/ManWithCard.png" alt="cartoonWithCard" />
+					</div> */}
 
-				<h5 className="beforeSubmitText">Before clicking Register, please review and ensure correct information in the enrollment details.</h5>
-					<button type="submit" onClick={handleRegisterButton}>Register</button>
+					<h5 className="beforeSubmitText">Before clicking 'Register', please review and ensure correct information in the enrollment details. <br /><button className="registerButton" type="submit" onClick={handleRegisterButton}>Register</button> </h5>
+				
 				</form>
+					<h6 className="haveAccount">Already have an account? <br /> <Link to="/login">Login</Link>!</h6>
 		</div>
 	);
 }
   
-  export default SignUpPage;
+  export default SignUpPage

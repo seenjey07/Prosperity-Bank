@@ -1,42 +1,44 @@
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
-import './App.css';
+import React, { useEffect, useState } from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import WelcomePage from './components/WelcomePage';
 import LoginPage from './components/LoginPage';
 import SignUpPage from './components/SignUpPage';
+import Dashboard from './components/Dashboard';
+import './App.css';
 
 function App() {
+  useEffect(() => {
+    const savedUserInfo = {
+        username: 'christine',
+        password: 'christine',
+      };
+    
+    localStorage.setItem('savedUserInfo', JSON.stringify(savedUserInfo));
+  }, []);
+
+  const [loggedInUser, setLoggedInUser] = useState(null);
+
   return (
-  <>
-    <div>
-      <img className="bankLogo" src="/src/BankLogo.jpg" alt="BankLogo" />
-      <header>Prosperity Bank</header>
-      <p className="bankTagline">Prosperity Unleashed: Banking with a Vision</p>
-    </div>
-
     <Router>
-     <main>
-        <nav>
-          <ul>
-            <li>
-              <Link to="/login">Sign in</Link>
-            </li>
-            <li>
-              <Link to="/signup">Register</Link>
-            </li>
-          </ul>
-        </nav>
+      <header>
+        <img className="bankLogo" src="src/assets/BankLogo.jpg" alt="BankLogo" />
+        <h1 className="bankName">Prosperity Bank</h1>
+        <p className="bankTagline">Prosperity Unleashed: Banking with a Vision</p>
+      </header>
 
-        <Routes>
-          <Route path="login" element={<LoginPage />} />
-          <Route path="signup" element={<SignUpPage />} />
-        </Routes>
-     </main>
+        <main>
+          <Routes>
+            <Route path='/welcome' element={<WelcomePage />} />
+            <Route path='/login' element={<LoginPage />} />
+            <Route path='/signup' element={<SignUpPage />} />
+            <Route path='/dashboard' element={<Dashboard user={loggedInUser} />} />
+          </Routes>
+        </main>
+
+      <footer>
+        <h6>2023 Prosperity Bank</h6>
+      </footer>
     </Router>
-
-    <div className="footerContainer">
-      <footer>Copyright 2023</footer>
-    </div>
-  </>
   )
 }
 
