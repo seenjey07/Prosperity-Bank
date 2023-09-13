@@ -28,7 +28,7 @@ function App() {
 
         <main>
           <Routes>
-            <Route path='/welcome' element={<WelcomePage />} />
+            <Route path='/' element={<WelcomePage />} />
             <Route path='/login' element={<LoginPage />} />
             <Route path='/signup' element={<SignUpPage />} />
             <Route path='/dashboard' element={<Dashboard user={loggedInUser} />} />

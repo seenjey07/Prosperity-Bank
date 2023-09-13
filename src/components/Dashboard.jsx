@@ -3,6 +3,8 @@ import React from 'react';
 const Dashboard = (props) => {
 	const { user } = props;
 
+	console.log('user prop in Dashboard:', user);
+
 	return (
 		<div>
 			{user ? (

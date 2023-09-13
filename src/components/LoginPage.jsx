@@ -5,6 +5,7 @@ import Input from "./Input";
 const LoginPage = () => {
 	const [username, setUsername] = useState ('');
 	const [password, setPassword] = useState ('');
+	const [loggedInUser, setLoggedInUser] = useState(null);
 	const [error, setError] = useState(null);
 	const navigate = useNavigate();
 
@@ -15,12 +16,13 @@ const LoginPage = () => {
 		e.preventDefault();
 
 		const savedUserInfo = JSON.parse(localStorage.getItem('savedUserInfo'));
-		const setLoggedInUser = savedUserInfo;
+
+		console.log('savedUserInfo:', savedUserInfo);
 
 		if (savedUserInfo && username === savedUserInfo.username && password === savedUserInfo.password) {
 			setError(null);
 				setLoggedInUser(savedUserInfo);
-				console.log('Redirect to Dashboard');
+				console.log('loggedInUser:', loggedInUser);
 				navigate('/dashboard');
 		} else {
 				setUsername('');
