@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Input from "./Input";
 
-const LoginPage = () => {
+const LoginPage = (props) => {
+	const { setLoggedInUser } = props;
 	const [username, setUsername] = useState ('');
 	const [password, setPassword] = useState ('');
-	const [loggedInUser, setLoggedInUser] = useState(null);
 	const [error, setError] = useState(null);
 	const navigate = useNavigate();
 
@@ -17,12 +17,9 @@ const LoginPage = () => {
 
 		const savedUserInfo = JSON.parse(localStorage.getItem('savedUserInfo'));
 
-		console.log('savedUserInfo:', savedUserInfo);
-
 		if (savedUserInfo && username === savedUserInfo.username && password === savedUserInfo.password) {
 			setError(null);
 				setLoggedInUser(savedUserInfo);
-				console.log('loggedInUser:', loggedInUser);
 				navigate('/dashboard');
 		} else {
 				setUsername('');

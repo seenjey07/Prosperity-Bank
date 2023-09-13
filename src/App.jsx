@@ -16,6 +16,7 @@ function App() {
     localStorage.setItem('savedUserInfo', JSON.stringify(savedUserInfo));
   }, []);
 
+
   const [loggedInUser, setLoggedInUser] = useState(null);
 
   return (
@@ -29,7 +30,7 @@ function App() {
         <main>
           <Routes>
             <Route path='/' element={<WelcomePage />} />
-            <Route path='/login' element={<LoginPage />} />
+            <Route path='/login' element={<LoginPage setLoggedInUser={setLoggedInUser} />} />
             <Route path='/signup' element={<SignUpPage />} />
             <Route path='/dashboard' element={<Dashboard user={loggedInUser} />} />
           </Routes>
