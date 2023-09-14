@@ -1,32 +1,59 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Input from "./Input";
 
 const SignUpPage = () => {
 	const [surname, setSurname] = useState('');
 	const [firstName, setFirstName] = useState('');
 	const [middleName, setMiddleName] = useState('');
-	const [birthday, setBirthday] = useState('');
+	const [accountNumber, setAccountNumber] = useState('');
+	const [accountBalance, setAccountBalance] = useState('');
+	const [cardType, setCardType] = useState('');
 	const [username, setUsername] = useState('');
 	const [password, setPassword] = useState('');
 	const [confirmPassword, setConfirmPassword] = useState('');
-	const [mobileNumber, setMobileNumber] = useState ('');
 	const [email, setEmail] = useState('');
+	const [error, setError] = useState('');
+	const navigate = useNavigate();
 
 	const onSurnameChange = (e) => setSurname(e.target.value);
 	const onFirstNameChange = (e) => setFirstName(e.target.value);
 	const onMiddleNameChange = (e) => setMiddleName(e.target.value);
-	const onBirthdayChange = (e) => setBirthday(e.target.value);
+	const onAccountNumberChange = (e) => setAccountNumber(e.target.value);
+	const onAccountBalanceChange = (e) => setAccountBalance(e.target.value);
+	const onCardTypeChange = (e) => setCardType(e.target.value);
 	const onUsernameChange = (e) => setUsername(e.target.value);
 	const onPasswordChange = (e) => setPassword(e.target.value);
 	const onConfirmPasswordChange = (e) => setConfirmPassword(e.target.value);
-	const onMobileNumberChange = (e) => setMobileNumber(e.target.value);
 	const onEmailChange = (e) => setEmail(e.target.value);
 
 	const handleRegisterButton = (e) => {
 		e.preventDefault();
-		console.log('Thank you for registering your account, ', firstName);
-	}
+
+		if (password !== confirmPassword) {
+			setPassword('');
+			setConfirmPassword('');
+			setError('Passwords do not match');
+			return;
+		}
+	
+		const registeredUser = {
+			surname,
+			firstName,
+			middleName,
+			accountNumber,
+			accountBalance,
+			cardType,
+			username,
+			password,
+			email,
+		};
+	
+		localStorage.setItem('registeredUser', JSON.stringify(registeredUser));
+		setError('');
+		navigate('/login');
+
+	};
 
 	return (
 		<div>
@@ -67,18 +94,45 @@ const SignUpPage = () => {
 						required
 					/> 
 					<br />
-				
+
 					<Input
-						key="birthday"
-						label="Date of Birth"
-						type="date"
-						id="birthday"
-						value={birthday}
-						onChange={onBirthdayChange}
+						key="accountNumber"
+						label="Account Number"
+						type="number"
+						id="accountNumber"
+						value={accountNumber}
+						onChange={onAccountNumberChange}
 						required
 					/>
-					<br /><br />
+					<br />
 
+					<Input
+						key="accountBalance"
+						label="Account Balance"
+						type="number"
+						id="accountBalance"
+						value={accountBalance}
+						onChange={onAccountBalanceChange}
+						required
+					/>
+					<br />
+
+					<Input
+						key="cardType"
+						label="Select a card type"
+						list="cardTypes"
+						id="cardType"
+						value={cardType}
+						onChange={onCardTypeChange}
+						required
+					/>
+					<datalist id="cardTypes">
+						<option value="Visa" />
+						<option value="MasterCard" />
+						<option value="American Express" />
+					</datalist>
+					<br />
+				
 					<h5 className="setOnlineBankInfo">Nominate your Online Banking Information:</h5>
 
 					<Input
@@ -115,17 +169,6 @@ const SignUpPage = () => {
 					<br />
 
 					<Input
-						key="mobileNumber"
-						label="Mobile Number"
-						type="text"
-						id="mobileNumber"
-						value={mobileNumber}
-						onChange={onMobileNumberChange}
-						required
-					/>
-					<br />
-
-					<Input
 						key="email"
 						label="Email Address"
 						type="email"
@@ -140,7 +183,11 @@ const SignUpPage = () => {
 						<img className="cartoonWithCard" src="src/assets/ManWithCard.png" alt="cartoonWithCard" />
 					</div> */}
 
-					<h5 className="beforeSubmitText">Before clicking 'Register', please review and ensure correct information in the enrollment details. <br /><button className="registerButton" type="submit" onClick={handleRegisterButton}>Register</button> </h5>
+					{error && <p className="passwordError">{error}</p>}
+
+					<h5 className="beforeSubmitText">Before clicking 'Register', please review and ensure correct information in the enrollment details. <br />
+						<button className="registerButton" type="submit" onClick={handleRegisterButton}>Register</button> 
+					</h5>
 				
 				</form>
 					<h6 className="haveAccount">Already have an account? <br /> <Link to="/login">Login</Link>!</h6>

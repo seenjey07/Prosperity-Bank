@@ -1,6 +1,6 @@
 
 const Input = (props) => {
-    const { label, type, id, value, onChange } = props
+    const { label, type, list,  id, value, onChange } = props
 
     return (
       <>
@@ -9,6 +9,7 @@ const Input = (props) => {
         <input 
 				title={label} 
 				type={type}
+        list={list}
 				id={id}
 				value={value}
 				onChange={onChange}

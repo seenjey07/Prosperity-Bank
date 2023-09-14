@@ -1,17 +1,37 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+// import ExpensesTable from './ExpensesTable';
 
 const Dashboard = (props) => {
-	const { user } = props;
+	const { user, accountBalance, accountNumber, cardType } = props;
+// const data = [
+// 	{ name: 'Expense Name', cost: cost, actions: ''}
+// ]
 
-	return (
+	return ( //Aayusin na lang layout, will also add Manage account feature pag kaya pa
 		<>
 		<div>
-			<h3 className="dashboard welcome">Welcome, {user.username}!</h3>
-			<h2 className="dashboard title">My Dashboard</h2>
-			<p className="dashboard savings">Savings</p>
-			<p className="dashboard expenses">Expenses</p>
-			<p className="dashboard deposit">Deposit</p>
-			<p className="dashboard withdraw">Withdraw</p>
+				<h3 className="dashboard-welcome">Welcome, {user.username}!</h3>
+					<button className="manageAccount">Manage Account</button> 
+					<section className="accountSection">
+						<p className="dasboard-accountBalanceText">Account Balance:</p>
+						<p className="dasboard-accountBalance">{user.accountBalance}</p>
+						<p className="dashboard-accountNumberText">Account Number:</p>
+						<p className="dashboard-accountNumber">{user.accountNumber}</p>
+						<p className="dashboard-cardType">{user.cardType}</p>
+					</section>
+					<section className="actionsSection">
+						<button className="dashboard-deposit">Deposit</button>
+						<button className="dashboard-sendMoney">Send Money</button>
+						<button className="dashboard-withdraw">Withdraw</button>
+						<button className="dashboard-transactions">Transaction History</button>
+					</section>
+					<section className="expensesSection">
+						<p className="dashboard-expenses">Expenses</p>
+						{/* <ExpensesTable data={data} />  */}
+						<button className="dashboard-addExpense">Add Expense</button>	
+					</section>
+					<Link to="/" className="logoutLinkInDashboard">Logout</Link>
 		</div>
 		</>
 	);

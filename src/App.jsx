@@ -7,17 +7,16 @@ import Dashboard from './components/Dashboard';
 import './App.css';
 
 function App() {
-  useEffect(() => {
-    const savedUserInfo = {
-        username: 'christine',
-        password: 'christine',
-      };
-    
-    localStorage.setItem('savedUserInfo', JSON.stringify(savedUserInfo));
-  }, []);
-
-
   const [loggedInUser, setLoggedInUser] = useState(null);
+
+  useEffect(() => {
+    const registeredUser = localStorage.getItem('savedUserInfo');
+
+    if (registeredUser) {
+      const parseSavedUserInfo = JSON.parse(registeredUser);
+      setLoggedInUser(parseSavedUserInfo);
+    }
+  }, []); //not sure dito kung lalagyan pa ba kasi gumagana na eh
 
   return (
     <Router>

@@ -15,7 +15,7 @@ const LoginPage = (props) => {
 	const handleLogin = (e) => {
 		e.preventDefault();
 
-		const savedUserInfo = JSON.parse(localStorage.getItem('savedUserInfo'));
+		const savedUserInfo = JSON.parse(localStorage.getItem('registeredUser'));
 
 		if (savedUserInfo && username === savedUserInfo.username && password === savedUserInfo.password) {
 			setError(null);
@@ -24,7 +24,7 @@ const LoginPage = (props) => {
 		} else {
 				setUsername('');
 				setPassword('');
-				setError('Invalid username or password. Please try again.');
+				setError('Invalid username or password.\nPlease try again.');
 		}
 	};
 
@@ -35,25 +35,23 @@ const LoginPage = (props) => {
 					key="username"
 					label="Username"
 					type="text"
-					id="username"
 					value={username}
 					onChange={onUsernameChange}
 					required
 				/> 
-				<br /><br />
+				<br />
 
 				<Input
 					key="password"
 					label="Password"
 					type="password"
-					id="password"
 					value={password}
 					onChange={onPasswordChange}
 					required
 				/> 
-				<br /><br />
+				<br />
 
-				{error && <p className="error">{error}</p>}
+				{error && <p className="loginError">{error}</p>}
 
 				<button className="loginButton" type="submit">Login</button>
 			</form>

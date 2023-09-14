@@ -1,13 +1,12 @@
 body {
   background-color:  rgb(161, 243, 216);
-  z-index: 2;
 }
 
 #root {
   background-color:  rgb(188, 253, 231);
   border-radius: 50px 0 50px 0;
   text-align: center;
-  width: fit-content;
+  width: 55%;
   height: fit-content;
   margin: auto;
   padding: 20px 5px 5px 5px;
@@ -26,15 +25,15 @@ body {
   border-radius: 28px 0 20px 0;
   margin: 0 auto;
   padding: 10px 0 0 0;
-  width: 77px;
-  height: 77px;
+  width: 70px;
+  height: 70px;
 }
 
 .bankName {
   text-align: center;
   color: rgb(18, 167, 167);
   text-shadow: 5px 0 2px rgb(28, 74, 92);
-  font-size: 25pt;
+  font-size: 23pt;
   font-weight: bold;
   margin: 5px auto;
 }
@@ -44,7 +43,7 @@ body {
   font-size: 9pt;
   font-family: 'Cambria';
   font-weight: bold;
-  padding-bottom: 20px;
+  padding-bottom: 15px;
 }
 
 footer {
@@ -116,6 +115,10 @@ li {
 .loginForm {
   padding: 5px 5px 20px 5px;
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .loginButton, .registerButton{
@@ -126,18 +129,24 @@ li {
   font-family: 'Cambria';
   font-weight: bold;
   margin: 10px 0 0 0;
-  padding: 3px 5px 3px 5px;
+  padding: 4px 15px 4px 15px;
   cursor: pointer;
 }
 
-.error {
+.loginError {
   color: brown;
   font-weight: bold;
   margin: 10px 10px 20px 10px;
   padding: 10px 10px 10px 10px;
   background-color: blanchedalmond;
   border-radius: 0 13px 0 13px;
-  font-size: 13pt;
+  font-size: 10pt;
+}
+
+.passwordError {
+  color: brown;
+  font-weight: bold;
+  font-size: 8pt;
 }
 
 .loginLink, .haveAccount {
@@ -175,4 +184,27 @@ li {
   font-family: 'Cambria';
   font-weight: bold;
 }
+
+/* Dashboard */
+
+.dashboard {
+  display: grid;
+  grid-template-areas: 
+  "welcome . ."
+  ". myDashboard ."
+  ". . accountNumber"
+  "accountBalance accountBalance accountBalance"
+  "expenseItems expenseItems expenseItems"
+  ;
+}
+
+.welcome {
+  grid-area: welcome;
+}
+
+.myDashboard {
+  grid-area: myDashboard;
+}
+
+
 
