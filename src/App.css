@@ -1,14 +1,17 @@
 body {
   background-color:  rgb(161, 243, 216);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 #root {
   background-color:  rgb(188, 253, 231);
   border-radius: 50px 0 50px 0;
   text-align: center;
-  width: 55%;
+  width: 50%;
   height: fit-content;
-  margin: auto;
+  margin: 0;
   padding: 20px 5px 5px 5px;
   font-family: 'Trebuchet MS';
 }
@@ -160,11 +163,11 @@ li {
 
 /*For the SignUp Page*/
 .onlineBankEnrollment {
-  font-size: 13pt;
+  font-size: 15pt;
   font-style: italic;
   font-weight: bold;
   margin: 0;
-  padding: 2px;
+  padding: 4px;
   border-top: 3px solid white;
   border-bottom: 3px solid white;
 }

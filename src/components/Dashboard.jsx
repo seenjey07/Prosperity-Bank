@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 // import ExpensesTable from './ExpensesTable';
 
 const Dashboard = (props) => {
-	const { user, accountBalance, accountNumber, cardType } = props;
+	const { user } = props;
 // const data = [
 // 	{ name: 'Expense Name', cost: cost, actions: ''}
 // ]

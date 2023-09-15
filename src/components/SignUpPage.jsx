@@ -26,9 +26,25 @@ const SignUpPage = () => {
 	const onPasswordChange = (e) => setPassword(e.target.value);
 	const onConfirmPasswordChange = (e) => setConfirmPassword(e.target.value);
 	const onEmailChange = (e) => setEmail(e.target.value);
-
+	
 	const handleRegisterButton = (e) => {
 		e.preventDefault();
+
+		if (
+			surname.trim() === '' ||
+			firstName.trim() === '' ||
+			middleName.trim() === '' ||
+			accountNumber.trim() === '' ||
+			accountBalance.trim() === '' ||
+			cardType.trim() === '' ||
+			username.trim() === '' ||
+			password.trim() === '' ||
+			confirmPassword.trim() === '' ||
+			email.trim() === ''
+		) {
+			setError('Please fill out all the blank fields.')
+			return;
+		}
 
 		if (password !== confirmPassword) {
 			setPassword('');
@@ -37,7 +53,7 @@ const SignUpPage = () => {
 			return;
 		}
 	
-		const registeredUser = {
+		const newUser = {
 			surname,
 			firstName,
 			middleName,
@@ -48,11 +64,14 @@ const SignUpPage = () => {
 			password,
 			email,
 		};
-	
-		localStorage.setItem('registeredUser', JSON.stringify(registeredUser));
-		setError('');
-		navigate('/login');
 
+		const savedUsers = JSON.parse(localStorage.getItem('savedUsers')) || [];
+		const updatedUsers = [...savedUsers, newUser];
+	
+		localStorage.setItem('savedUsers', JSON.stringify(updatedUsers));
+		setError('');
+		alert('Account succesfully created.');
+		navigate('/login');
 	};
 
 	return (
@@ -188,8 +207,8 @@ const SignUpPage = () => {
 					<h5 className="beforeSubmitText">Before clicking 'Register', please review and ensure correct information in the enrollment details. <br />
 						<button className="registerButton" type="submit" onClick={handleRegisterButton}>Register</button> 
 					</h5>
-				
 				</form>
+				
 					<h6 className="haveAccount">Already have an account? <br /> <Link to="/login">Login</Link>!</h6>
 		</div>
 	);

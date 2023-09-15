@@ -15,16 +15,17 @@ const LoginPage = (props) => {
 	const handleLogin = (e) => {
 		e.preventDefault();
 
-		const savedUserInfo = JSON.parse(localStorage.getItem('registeredUser'));
+		const savedUsers = JSON.parse(localStorage.getItem('savedUsers'));
 
-		if (savedUserInfo && username === savedUserInfo.username && password === savedUserInfo.password) {
+		if (savedUsers && savedUsers.some(user => user.username === username && user.password === password)) {
 			setError(null);
-				setLoggedInUser(savedUserInfo);
-				navigate('/dashboard');
+			const loggedInUser = savedUsers.find(user => user.username === username);
+			props.setLoggedInUser(loggedInUser);
+			navigate('/dashboard');
 		} else {
 				setUsername('');
 				setPassword('');
-				setError('Invalid username or password.\nPlease try again.');
+				setError('Invalid username or password. Please try again.');
 		}
 	};
 

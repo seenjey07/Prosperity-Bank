@@ -8,15 +8,15 @@ import './App.css';
 
 function App() {
   const [loggedInUser, setLoggedInUser] = useState(null);
+  const [registeredUsers, setRegisteredUsers] = useState([]);
 
   useEffect(() => {
-    const registeredUser = localStorage.getItem('savedUserInfo');
+    const savedUsers = localStorage.getItem('savedUsers');
 
-    if (registeredUser) {
-      const parseSavedUserInfo = JSON.parse(registeredUser);
-      setLoggedInUser(parseSavedUserInfo);
+    if (savedUsers) {
+      setRegisteredUsers(JSON.parse(savedUsers));
     }
-  }, []); //not sure dito kung lalagyan pa ba kasi gumagana na eh
+  }, []);
 
   return (
     <Router>
@@ -30,7 +30,7 @@ function App() {
           <Routes>
             <Route path='/' element={<WelcomePage />} />
             <Route path='/login' element={<LoginPage setLoggedInUser={setLoggedInUser} />} />
-            <Route path='/signup' element={<SignUpPage />} />
+            <Route path='/signup' element={<SignUpPage registeredUsers={registeredUsers}/>} />
             <Route path='/dashboard' element={<Dashboard user={loggedInUser} />} />
           </Routes>
         </main>
