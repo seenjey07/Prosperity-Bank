@@ -3,14 +3,14 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  width: 100%;
+  height: 100%;
 }
 
 #root {
   background-color:  rgb(188, 253, 231);
   border-radius: 50px 0 50px 0;
   text-align: center;
-  width: 50%;
-  height: fit-content;
   margin: 0;
   padding: 20px 5px 5px 5px;
   font-family: 'Trebuchet MS';
@@ -193,21 +193,88 @@ li {
 .dashboard {
   display: grid;
   grid-template-areas: 
-  "welcome . ."
-  ". myDashboard ."
-  ". . accountNumber"
-  "accountBalance accountBalance accountBalance"
-  "expenseItems expenseItems expenseItems"
-  ;
+  "welcome welcome welcome manageAccount"
+  "accountBalanceText accountBalanceText deposit sendMoney"
+  "accountBalance accountBalance deposit sendMoney"
+  "accountNumberText accountNumberText withdraw transactions"
+  "accountNumber cardType withdraw transactions"
+  "expenses expenses expenses expenses"
+  "expenses expenses expenses expenses"
+  ". addExpense addExpense .";
+  gap: 2px;
+  margin: 0;
+  padding: 5px 10px 5px 10px;
 }
 
 .welcome {
   grid-area: welcome;
+  display: flex;
+  justify-content: flex-start;
 }
 
-.myDashboard {
-  grid-area: myDashboard;
+.manageAccount {
+  grid-area: manageAccount;
+  display: flex;
+  justify-content: flex-end;
 }
 
+.accountBalanceText {
+  grid-area: accountBalanceText;
+  justify-content: flex-start;
+}
 
+.accountBalance {
+  grid-area: accountBalance;
+  justify-content: flex-start;
+}
 
+.accountNumberText {
+  grid-area: accountNumberText;
+  justify-content: flex-start;
+}
+
+.accountNumber {
+  grid-area: accountNumber;
+  justify-content: flex-start;
+}
+
+.cardType {
+  grid-area: cardType;
+  justify-content: flex-end;
+}
+
+.deposit, .sendMoney, .withdraw, .transactions, .addExpense {
+  display: flex;
+  border: none;
+  border-radius: 5px;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(24, 207, 198);
+}
+
+.deposit {
+  grid-area: deposit;
+} 
+
+.sendMoney {
+  grid-area: sendMoney;
+}
+
+.withdraw {
+  grid-area: withdraw;
+}
+
+.transactions {
+  grid-area: transactions;
+}
+
+.addExpense {
+  grid-area: addExpense;
+}
+
+.accountSection, .actionsSection, .expensesSection {
+  border-radius: 10px;
+  border: 1px solid gray; 
+  margin: 15px;
+  padding: 7px;
+}
