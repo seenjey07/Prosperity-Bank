@@ -107,7 +107,7 @@ ul {
   font-size: 10pt;
 }
 
-li {
+.welcomeOptions {
   margin-right: 15px;
   display: inline;
   border-radius: 4px;
@@ -146,7 +146,7 @@ li {
   font-size: 10pt;
 }
 
-.passwordError {
+.passwordError, .depositError {
   color: brown;
   font-weight: bold;
   font-size: 8pt;
@@ -277,4 +277,10 @@ li {
   border: 1px solid gray; 
   margin: 15px;
   padding: 7px;
+}
+
+/*Deposit Page*/
+
+.westernUnionContainer, .westernUnionContainer {
+  text-align: center;
 }

@@ -3,9 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import Input from './Input';
 
 const Deposit = (props) => {
-  const { user } = props;
+  const { user, depositHistory, setDepositHistory, updateAccountBalance } = props;
   const [depositInput, setDepositInput] = useState('');
-  const [depositOptions, setDepositOptions] = useState('');
+  const [depositOption, setDepositOption] = useState('');
   const [error, setError] = useState('');
   const [selectedOption, setSelectedOption] = useState('');
   const [additionalInfo, setAdditionalInfo] = useState('');
@@ -13,44 +13,47 @@ const Deposit = (props) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const savedBalance = JSON.parse(localStorage.getItem('savedBalance'));
-    const currentBalance = savedBalance.reduce(
-      (total, deposit) => total + parseFloat(deposit.depositInput),
-      0
-    );
+    localStorage.setItem('savedBalance', JSON.stringify(depositHistory));
+  }, [depositHistory]);
   
-    user.accountBalance = currentBalance;
-  }, [user]);
-
-  const onDepositInputChange = (e) => setDepositInput(e.target.value);
-  const onDepositOptionsChange = (e) => {
-    setDepositOptions(e.target.value);
+  const onDepositOptionChange = (e) => {
+    setDepositOption(e.target.value);
     setSelectedOption(e.target.value);
   };
 
-  const onAdditionalInfo = (e) => setAdditionalInfo(e.target.value);
-  const onWesternReference = (e) => setWesternReference(e.target.value);
+  const onDepositInputChange = (e) => setDepositInput(e.target.value);
+  const onAdditionalInfoChange = (e) => setAdditionalInfo(e.target.value);
+  const onWesternReferenceChange = (e) => setWesternReference(e.target.value);
 
   const handleDepositSubmitButton = (e) => {
     e.preventDefault();
 
-    if (depositInput.trim() === '' || depositOptions.trim() === '') {
+    if (!depositInput || !depositOption) {
       setError('Please fill out all the blank fields.')
       return;
     }
 
-    const newAccountBalance = currentBalance;
-    const savedBalance = JSON.parse(localStorage.getItem('savedBalance')) || [];
-    
-    user.accountBalance += parseFloat(depositInput);
-    
-    const updatedBalance = [...savedBalance, newAccountBalance];
+    const depositAmount = parseFloat(depositInput);
 
-    localStorage.setItem('savedBalance', JSON.stringify(updatedBalance));
+    if (isNaN(depositAmount) || depositAmount <=0) {
+      setError('Invalid deposit amount');
+      return;
+    }
+
+    const newAccountBalance = user.accountBalance + depositAmount;
+    const updatedUser = { ...user, accountBalance: newAccountBalance};
+    updateAccountBalance(newAccountBalance);
+
+    const newDeposit = { amount: depositAmount, date: new Date() };
+    setDepositHistory([...depositHistory, newDeposit]);
+    setDepositInput('');
     setError('');
+
+    localStorage.setItem('savedBalance', JSON.stringify(newAccountBalance));
+
     alert('Deposit was successful.');
     navigate('/dashboard');
-  };
+  }
 
   return (
     <div className="depositHeader">
@@ -60,21 +63,21 @@ const Deposit = (props) => {
       <div className="depositContainer">
 
         <Input
-          key="depositOptions"
+          key="depositOption"
           label="Deposit from:"
           list="depositOptions"
-          id="depositOptions"
-          value={depositOptions}
-          onChange={onDepositOptionsChange}
+          id="depositOption"
+          value={depositOption}
+          onChange={onDepositOptionChange}
           required
         />
           <datalist id="depositOptions">
-            <option value="Another Prosperity Bank Account" />
+            <option value="Another Bank Account" />
             <option value="Western Union" />
           </datalist>
         <br />
 
-          {selectedOption === "Another Prosperity Bank Account" && (
+          {selectedOption === "Another Bank Account" && (
             <form>
               <Input
               key="additionalInfo"
@@ -82,7 +85,7 @@ const Deposit = (props) => {
               type="number"
               id="additionalInfo"
               value={additionalInfo}
-              onChange={onAdditionalInfo}
+              onChange={onAdditionalInfoChange}
               required
               />
               <br />
@@ -108,10 +111,11 @@ const Deposit = (props) => {
 
           {selectedOption === "Western Union" && (
             <div className="westernUnionContainer">
-              <ol className="westernUnionInstructions">To deposit through Western Union:</ol>
+              <ol className="westernUnionInstructions">To deposit through Western Union:
                 <li className="westernUnionInstructions">The sender goes to a partner branch for the payment and provides your details to the cashier.</li>
                 <li className="westernUnionInstructions">The sender takes note and gives you the reference number provided by the cashier.</li>
                 <li className="westernUnionInstructions">You proceed to receive the money via Western Union on Prosperity Bank Online, input the reference number and receive the funds to your account.</li>
+              </ol>
               <br />
 
               <h5 className="westernUnionDeposit">Already have the reference number?</h5>
@@ -125,7 +129,7 @@ const Deposit = (props) => {
                     type="text"
                     id="westernReference"
                     value={westernReference}
-                    onChange={onWesternReference}
+                    onChange={onWesternReferenceChange}
                     required
                   />
                   <br />
@@ -151,7 +155,8 @@ const Deposit = (props) => {
             </div>
             )
           }
-      </div>     
+      </div>
+        <br />  
         <button onClick={() => navigate('/dashboard')}>Back to Dashboard</button>
     </div>
   )

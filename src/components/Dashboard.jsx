@@ -9,6 +9,10 @@ const Dashboard = (props) => {
 // 	{ name: 'Expense Name', cost: cost, actions: ''}
 // ]
 
+	const handleManageAccountButton = (e) => { 
+		navigate('/manage-account');
+	}
+
 	const handleDepositButton = (e) => {
 		navigate('/deposit');
 	}
@@ -25,14 +29,14 @@ const Dashboard = (props) => {
 		navigate('/transactions-history');
 	}
 
-	return ( //Will also add Manage account feature pag kaya pa
+	return (
 		<>
 		<div>
 				<h3 className="dashboard welcome">Welcome, {user.username}!</h3>
-					<button className="dashboard manageAccount">Manage Account</button> 
+					<button className="dashboard manageAccountButton" type="button" onClick={handleManageAccountButton}>Manage Account</button> 
 					<section className="dashboard accountSection">
 						<p className="dasboard accountBalanceText">Account Balance:</p>
-						<p className="dasboard accountBalance">{user.accountBalance}</p>
+						<h4 className="dasboard accountBalance">{user.accountBalance}</h4>
 						<p className="dashboard accountNumberText">Account Number:</p>
 						<p className="dashboard accountNumber">{user.accountNumber}</p>
 						<p className="dashboard cardType">{user.cardType}</p>

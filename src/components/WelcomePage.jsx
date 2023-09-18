@@ -8,8 +8,8 @@ const WelcomePage = () => {
 				<h4 className="howToHelpMessage">How can we help you today?</h4>
 				<nav>
 					<ul>
-						<li><Link to="/login">Log me in</Link></li>
-						<li><Link to="/signup">I wanna bank with you</Link></li>
+						<li className="welcomeOptions"><Link to="/login">Log me in</Link></li>
+						<li className="welcomeOptions"><Link to="/signup">I wanna bank with you</Link></li>
 					</ul>
 				</nav>
 		</div>
