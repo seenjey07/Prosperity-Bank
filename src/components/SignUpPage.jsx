@@ -65,7 +65,12 @@ const SignUpPage = () => {
 			email,
 		};
 
-		const savedUsers = JSON.parse(localStorage.getItem('savedUsers'));
+		let savedUsers = JSON.parse(localStorage.getItem('savedUsers'));
+		
+		if (!savedUsers) {
+			savedUsers = [];
+		}
+
 		const updatedUsers = [...savedUsers, newUser];
 	
 		localStorage.setItem('savedUsers', JSON.stringify(updatedUsers));

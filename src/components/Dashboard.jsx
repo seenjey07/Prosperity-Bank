@@ -1,14 +1,31 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 // import ExpensesTable from './ExpensesTable';
 
 const Dashboard = (props) => {
 	const { user } = props;
+	const navigate = useNavigate();
 // const data = [
 // 	{ name: 'Expense Name', cost: cost, actions: ''}
 // ]
 
-	return ( //Aayusin na lang layout, will also add Manage account feature pag kaya pa
+	const handleDepositButton = (e) => {
+		navigate('/deposit');
+	}
+
+	const handleSendMoneyButton = (e) => {
+		navigate('/send-money');
+	}
+
+	const handleWithdrawButton = (e) => {
+		navigate('/withdraw');
+	}
+
+	const handleTransactionsButton = (e) => {
+		navigate('/transactions-history');
+	}
+
+	return ( //Will also add Manage account feature pag kaya pa
 		<>
 		<div>
 				<h3 className="dashboard welcome">Welcome, {user.username}!</h3>
@@ -21,15 +38,15 @@ const Dashboard = (props) => {
 						<p className="dashboard cardType">{user.cardType}</p>
 					</section>
 					<section className="dashboard actionsSection">
-						<button className="dashboard deposit">Deposit</button>
-						<button className="dashboard sendMoney">Send Money</button>
-						<button className="dashboard withdraw">Withdraw</button>
-						<button className="dashboard transactions">Transaction History</button>
+						<button className="dashboard deposit" type="button" onClick={handleDepositButton}>Deposit</button>
+						<button className="dashboard sendMoney" type="button" onClick={handleSendMoneyButton}>Send Money</button>
+						<button className="dashboard withdraw" type="button" onClick={handleWithdrawButton}>Withdraw</button>
+						<button className="dashboard transactions" type="button" onClick={handleTransactionsButton}>Transaction History</button>
 					</section>
 					<section className="dashboard expensesSection">
 						<p className="dashboard expenses">Expenses</p>
-						{/* <ExpensesTable data={data} />  */}
-						<button className="dashboard addExpense">Add Expense</button>	
+						{/* <ExpensesTable data={data} />  not sure if tama bang i-table format or not */}
+						<button className="dashboard addExpense" type="button">Add Expense</button>	
 					</section>
 					<Link to="/" className="logoutLinkInDashboard">Logout</Link>
 		</div>
