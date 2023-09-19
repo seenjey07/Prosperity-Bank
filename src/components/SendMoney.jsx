@@ -5,6 +5,8 @@ const SendMoney = (props) => {
   const { user } = props;
   const navigate = useNavigate();
 
+
+
   return (
     <div className="sendMoneyHeader">
       <h3 className="sendMoneyText">Send Money</h3>
@@ -13,7 +15,7 @@ const SendMoney = (props) => {
 
 
 
-      <button onClick={() => navigate('/dashboard')}>Back to Dashboard</button>
+      <button className="backToDashboard" onClick={() => navigate('/dashboard')}>Return to Dashboard</button>
 
     </div>
   )

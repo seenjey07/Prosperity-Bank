@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 const Transactions = (props) => {
   const { user } = props;
   const navigate = useNavigate;
+  
   return (
     <div className="transactionsHeader">
       <h3 className="transactionsText">Transactions History</h3>
@@ -12,7 +13,7 @@ const Transactions = (props) => {
 
 
 
-      <button onClick={() => navigate('/dashboard')}>Back to Dashboard</button>
+      <button className="backToDashboard" onClick={() => navigate('/dashboard')}>Return to Dashboard</button>
     </div>
   )
 }

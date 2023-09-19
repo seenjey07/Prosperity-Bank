@@ -18,8 +18,9 @@ function App() {
   
   useEffect(() => {
     const savedUsers = JSON.parse(localStorage.getItem('savedUsers'));
-    const savedBalance = JSON.parse(localStorage.getItem('savedBalance'));
- 
+    const savedBalance = parseFloat(localStorage.getItem('savedBalance'));
+    const savedDepositHistory = JSON.parse(localStorage.getItem('depositHistory'));
+
     if (Array.isArray(savedUsers)) {
       setRegisteredUsers(savedUsers);
     }
@@ -27,26 +28,53 @@ function App() {
     if (typeof savedBalance === 'number') {
       setLoggedInUser({ ...loggedInUser, accountBalance: savedBalance });
     }
-  }, []);
+
+    if (Array.isArray(savedDepositHistory)) {
+      setDepositHistory(savedDepositHistory);
+    }
+  }, []); /*pag inaalis yung loggedInUser, hindi nase-save para sa next log-in yung deposits from previous transactions, if nasa loob naman yung loggedInUser, may infinite loop error*/
 
     const updateAccountBalance = (newBalance) => {
       setLoggedInUser({ ...loggedInUser, accountBalance: newBalance });
+      localStorage.setItem('savedBalance', newBalance.toString());
     }
+
+  //     if (Array.isArray(savedUsers) && savedUsers.length > 0) {
+  //       setLoggedInUser(savedUsers[0]);
+  //     }
+
+  //     if (Array.isArray(savedUsers)) {
+  //       setRegisteredUsers(savedUsers);
+  //     }
+
+  //     if (typeof savedBalance === 'number') {
+  //       setLoggedInUser((prevUser) => ({ ...prevUser, accountBalance: savedBalance }));
+  //     }
+
+  //     if (Array.isArray(savedDepositHistory)) {
+  //       setDepositHistory(savedDepositHistory);
+  //     }
+  // }, []);
+
+  //     const updateAccountBalance = (newBalance) => { 
+  //       setLoggedInUser((prevUser) => ({ ...prevUser, accountBalance: newBalance }));
+  //       localStorage.setItem('savedBalance' , newBalance.toString());
+  //     };
 
   return (
     <Router>
-      <header>
+      <header className='bankHeaderContainer'>
         <img className="bankLogo" src="src/assets/BankLogo.jpg" alt="BankLogo" />
         <h1 className="bankName">Prosperity Bank</h1>
         <p className="bankTagline">Prosperity Unleashed: Banking with a Vision</p>
       </header>
 
-        <main>
+        <main className="bankMainContainer">
           <Routes>
             <Route path='/' element={<WelcomePage />} />
             <Route path='/login' element={<LoginPage setLoggedInUser={setLoggedInUser} />} />
             <Route path='/signup' element={<SignUpPage registeredUsers={registeredUsers}/>} />
-            <Route path='/dashboard' element={<Dashboard user={loggedInUser} />} />
+            <Route path='/dashboard' element={<Dashboard user={loggedInUser} depositHistory={depositHistory} setDepositHistory={setDepositHistory} updateAccountBalance={updateAccountBalance} />} />
             <Route path='/manage-account' element={<ManageAccounts user={loggedInUser} updateAccountBalance={updateAccountBalance} />} />
             <Route path='/deposit' element={<Deposit user={loggedInUser} depositHistory={depositHistory} setDepositHistory={setDepositHistory} updateAccountBalance={updateAccountBalance} />} />
             <Route path='/send-money' element={<SendMoney user={loggedInUser}/>} />

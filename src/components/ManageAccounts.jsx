@@ -1,10 +1,9 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Input from './Input';
 
 const ManageAccounts = (props) => {
   const { user, updateAccountBalance } = props;
-  const [editedUsername, setEditedUsername] = useState(user.username);
   const [editedPassword, setEditedPassword] = useState('');
   const [editedConfirmPassword, setEditedConfirmPassword] = useState('');
   const [editedEmail, setEditedEmail] = useState(user.email);
@@ -19,39 +18,39 @@ const ManageAccounts = (props) => {
         setEditedPassword('');
 			  setEditedConfirmPassword('');
 			  setError('Passwords do not match');
-			  return;
+        return;
       }
 
-    const updatedAccountInfo = {
-			...user,
-      accountBalance: editedAccountBalance,
-			editedUsername,
-			editedPassword,
-			editedEmail,
-		};
-
-		const savedUsers = JSON.parse(localStorage.getItem('savedUsers')) || [];
+      const savedUsers = JSON.parse(localStorage.getItem('savedUsers')) || [];
 		
-    const userIndex = savedUsers.findIndex((user) => user.id === loggedInUser.id);
+      const userIndex = savedUsers.findIndex((savedUser) => savedUser.username === user.username);
+  
+      if (userIndex !== -1) { /*irereturn ang -1 kung hindi magkakaroon ng match yung username, meaning non-existent sa array yung username*/
+          const updatedAccountInfo = {
+            ...savedUsers[userIndex],
+            accountBalance: parseFloat(editedAccountBalance),
+            password: editedPassword || savedUsers[userIndex].password,
+            email: editedEmail || savedUsers[userIndex].email,
+          };
 
-    if (userIndex !== -1) {
       savedUsers[userIndex] = updatedAccountInfo;
-    } else {
-      savedUsers.push(updatedAccountInfo)
-    }
+      
+		  localStorage.setItem('savedUsers', JSON.stringify(savedUsers));
+      updateAccountBalance(parseFloat(editedAccountBalance));
 
-		localStorage.setItem('savedUsers', JSON.stringify(savedUsers));
-      updateAccountBalance(editedAccountBalance);
-			setError('');
-      alert('Account information succesfully updated.');
-		  navigate('/dashboard');
+      setTimeout(() => {
+        setError('');
+        alert('Account information succesfully updated. Please login again.');
+        navigate('/login');
+      }, 1000);
+    }
 	};
 
   return (
     <div>
-      <h3 className="manageAccountText">Manage your Account Information</h3>
-      <form>
-        <div className="manageAccountContainer"> 
+      <h3 className="manageAccountText">Manage Your Account Information</h3>
+      <form className="manageAccountContainer">
+        <div> 
           <Input
               key="editedAccountBalance"
               label="New Account Balance"
@@ -62,17 +61,7 @@ const ManageAccounts = (props) => {
           />
           <br />
 
-          <Input
-              key="editedUsername"
-              label="New Username"
-              type="text"
-              id="editedUsername"
-              value={editedUsername}
-              onChange={(e) => setEditedUsername(e.target.value)}
-          />
-          <br />
-
-          <Input
+         <Input
             key="editedPassword"
             label="New Password"
             type="password"
@@ -108,7 +97,7 @@ const ManageAccounts = (props) => {
          <button className="saveChangesButton" type="submit" onClick={handleUpdate}>Save Changes</button>
       </form>
 
-      <button onClick={() => navigate('/dashboard')}>Back to Dashboard</button>
+      <button className="backToDashboard" onClick={() => navigate('/dashboard')}>Back to Dashboard</button>
     </div>
   )
 }

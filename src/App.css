@@ -3,6 +3,8 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  width: 100%;
+  height: 100%;
 }
 
 #root {
@@ -12,17 +14,14 @@ body {
   margin: 0;
   padding: 20px 5px 5px 5px;
   font-family: 'Trebuchet MS';
-  width: 50%;
-  height: fit-content;
+  width: 70%;
+  height: 90%;
 }
 
-/* .cartoonWithCard {
-  position: absolute;
+.cartoonWithCard {
   opacity: .70;
-  height: 230px;
-  display: inline-flex;
-  align-items: end;
-} */
+  height: 250px;
+}
 
 .bankLogo {
   border-radius: 28px 0 20px 0;
@@ -60,7 +59,7 @@ footer {
 
 /*For input*/
 label {
-  font-size: 9.5pt;
+  font-size: 10pt;
   font-weight: bold;
   padding-right: 5px;
   size: 99;
@@ -124,15 +123,15 @@ ul {
   align-items: center;
 }
 
-.loginButton, .registerButton{
+.loginButton, .registerButton, .depositButton, .saveChangesButton, .backToDashboard, .deposit, .sendMoney,.withdraw, .transactions, .manageAccountButton, .addExpense {
   border: transparent;
   border-radius: 7px 0 7px 0;
   background-color:rgb(24, 207, 198);
   font-size: 9.5pt;
   font-family: 'Cambria';
   font-weight: bold;
-  margin: 10px 0 0 0;
-  padding: 4px 15px 4px 15px;
+  margin: 0;
+  padding: 5px;
   cursor: pointer;
 }
 
@@ -149,7 +148,7 @@ ul {
 .passwordError, .depositError {
   color: brown;
   font-weight: bold;
-  font-size: 8pt;
+  font-size: 9pt;
 }
 
 .loginLink, .haveAccount {
@@ -162,7 +161,7 @@ ul {
 }
 
 /*For the SignUp Page*/
-.onlineBankEnrollment {
+.onlineBankEnrollment, .depositText, .transactionsText, .withdrawText, .sendMoneyText, .manageAccountText {
   font-size: 15pt;
   font-style: italic;
   font-weight: bold;
@@ -190,57 +189,76 @@ ul {
 
 /* Dashboard */
 
-.dashboard {
+.accountActionsSection, .expensesSection, .depositContainer, .manageAccountContainer {
+  border-radius: 10px;
+  border: 1px solid gray; 
+  margin: 35px 15px 15px 15px;
+  padding: 9px;
+  font-family: 'Trebuchet MS';
   display: grid;
+}
+
+.depositContainer {
+  padding: 7px 7px 15px 7px;
+}
+
+.accountActionsSection {
   grid-template-areas: 
-  "welcome welcome welcome manageAccount"
-  "accountBalanceText accountBalanceText deposit sendMoney"
-  "accountBalance accountBalance deposit sendMoney"
-  "accountNumberText accountNumberText withdraw transactions"
-  "accountNumber cardType withdraw transactions"
-  "expenses expenses expenses expenses"
-  "expenses expenses expenses expenses"
-  ". addExpense addExpense .";
-  gap: 2px;
-  margin: 0;
-  padding: 5px 10px 5px 10px;
+  "accountBalanceText accountBalanceText . . ."
+  "accountBalance accountBalance . deposit sendMoney"
+  "accountNumberText accountNumberText . withdraw transactions"
+  "accountNumber cardType . . .";
+  gap: 3px;
+}
+
+.expensesSection {
+  grid-template-areas: 
+  "expenses expenses expenses expenses expenses"
+  "expenses expenses expenses expenses expenses"
+  ". . addExpense . ."
+  ". . addExpense . .";
+  gap: 3px;
 }
 
 .welcome {
-  grid-area: welcome;
   display: flex;
-  justify-content: flex-start;
+  justify-content: center;
+  font-size: 18pt;
+  margin: 12px 12px 2px 12px;
 }
 
-.manageAccount {
-  grid-area: manageAccount;
-  display: flex;
-  justify-content: flex-end;
-}
-
-.accountBalanceText {
+.accountBalanceText, .accountNumberText {
   grid-area: accountBalanceText;
-  justify-content: flex-start;
+  display: flex;
+  justify-content: left;
+  margin: 10px 10px 5px 5px;
 }
 
 .accountBalance {
   grid-area: accountBalance;
-  justify-content: flex-start;
+  display: flex;
+  justify-content: center;
+  font-size: 18pt;
+  margin: 10px 10px 10px 5px;
 }
 
 .accountNumberText {
   grid-area: accountNumberText;
-  justify-content: flex-start;
+  padding: 10px 10px 5px 5px;
 }
 
-.accountNumber {
+.accountNumber, .cardType {
   grid-area: accountNumber;
-  justify-content: flex-start;
+  display: flex;
+  justify-content: left;
+  font-size: 12pt;
+  margin: 10px 10px 5px 10px;
 }
 
 .cardType {
   grid-area: cardType;
-  justify-content: flex-end;
+  justify-content: right;
+  margin: 10px 10px 0 5px;
 }
 
 .deposit, .sendMoney, .withdraw, .transactions, .addExpense {
@@ -250,6 +268,16 @@ ul {
   justify-content: center;
   align-items: center;
   background-color: rgb(24, 207, 198);
+}
+
+.sendMoney, .transactions {
+  margin: 0 8px 0 0;
+}
+
+.expenses {
+  display: flex;
+  justify-content: left;
+  margin: 10px 10px 5px 5px;
 }
 
 .deposit {
@@ -272,15 +300,45 @@ ul {
   grid-area: addExpense;
 }
 
-.accountSection, .actionsSection, .expensesSection {
-  border-radius: 10px;
-  border: 1px solid gray; 
-  margin: 15px;
-  padding: 7px;
-}
-
 /*Deposit Page*/
-
-.westernUnionContainer, .westernUnionContainer {
-  text-align: center;
+.depositInstruction {
+  font-size: 12pt;
+  margin: 5px 5px 0px 5px;
+  padding: 2px;
 }
+
+#depositOption {
+font-family: 'Trebuchet MS';
+font-size: 11pt;
+margin: 10px 15px 10px 15px;
+}
+
+.currentBalance {
+  margin: 30px auto;
+  font-size: 14pt;
+  font-weight: normal;
+}
+
+.beforeDepositSubmitText {
+  font-size: 11pt;
+  margin: 30px 10px 10px 10px;
+}
+
+.depositButton {
+  margin: 15px 0 0 0;
+}
+
+.saveChangesButton {
+  margin: 15px 20px 10px 20px;
+}
+
+.westernUnionMainInstruction {
+  text-align: center;
+  font-style: italic;
+}
+
+.westernUnionInstructions {
+  text-align: justify;
+  margin: 0 30px 0 10px;
+}
+

@@ -71,6 +71,11 @@ const SignUpPage = () => {
 			savedUsers = [];
 		}
 
+		if (savedUsers.some((user) => user.username === newUser.username)) {
+			setError('Username is already taken. Please choose a different username.');
+			return;
+		}
+
 		const updatedUsers = [...savedUsers, newUser];
 	
 		localStorage.setItem('savedUsers', JSON.stringify(updatedUsers));
@@ -154,6 +159,7 @@ const SignUpPage = () => {
 						<option value="Visa" />
 						<option value="MasterCard" />
 						<option value="American Express" />
+						<option value="Discover" />
 					</datalist>
 					<br />
 				
@@ -203,13 +209,13 @@ const SignUpPage = () => {
 					/>
 					<br /><br />
 
-					{/* <div>
+					<div>
 						<img className="cartoonWithCard" src="src/assets/ManWithCard.png" alt="cartoonWithCard" />
-					</div> */}
+					</div>
 
 					{error && <p className="passwordError">{error}</p>}
 
-					<h5 className="beforeSubmitText">Before clicking 'Register', please review and ensure correct information in the enrollment details. <br />
+					<h5 className="beforeSubmitText">Before clicking 'Register', please review and ensure correct information in the enrollment details. <br /><br />
 						<button className="registerButton" type="submit" onClick={handleRegisterButton}>Register</button> 
 					</h5>
 				</form>
