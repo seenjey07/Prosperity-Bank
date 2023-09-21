@@ -3,11 +3,10 @@ import { useNavigate } from 'react-router-dom';
 import Input from './Input';
 
 const ManageAccounts = (props) => {
-  const { user, updateAccountBalance } = props;
+const { user } = props;
   const [editedPassword, setEditedPassword] = useState('');
   const [editedConfirmPassword, setEditedConfirmPassword] = useState('');
   const [editedEmail, setEditedEmail] = useState(user.email);
-  const [editedAccountBalance, setEditedAccountBalance] = useState(user.accountBalance);
   const navigate = useNavigate();
   const [error, setError] = useState('');
 
@@ -21,14 +20,13 @@ const ManageAccounts = (props) => {
         return;
       }
 
-      const savedUsers = JSON.parse(localStorage.getItem('savedUsers')) || [];
+      const savedUsers = JSON.parse(localStorage.getItem('savedUsers'));
 		
       const userIndex = savedUsers.findIndex((savedUser) => savedUser.username === user.username);
   
       if (userIndex !== -1) { /*irereturn ang -1 kung hindi magkakaroon ng match yung username, meaning non-existent sa array yung username*/
           const updatedAccountInfo = {
             ...savedUsers[userIndex],
-            accountBalance: parseFloat(editedAccountBalance),
             password: editedPassword || savedUsers[userIndex].password,
             email: editedEmail || savedUsers[userIndex].email,
           };
@@ -36,8 +34,7 @@ const ManageAccounts = (props) => {
       savedUsers[userIndex] = updatedAccountInfo;
       
 		  localStorage.setItem('savedUsers', JSON.stringify(savedUsers));
-      updateAccountBalance(parseFloat(editedAccountBalance));
-
+      
       setTimeout(() => {
         setError('');
         alert('Account information succesfully updated. Please login again.');
@@ -49,17 +46,10 @@ const ManageAccounts = (props) => {
   return (
     <div>
       <h3 className="manageAccountText">Manage Your Account Information</h3>
-      <form className="manageAccountContainer">
+      <form className="manageAccountContainer" onSubmit={handleUpdate}>
         <div> 
-          <Input
-              key="editedAccountBalance"
-              label="New Account Balance"
-              type="number"
-              id="editedAccountBalance"
-              value={editedAccountBalance}
-              onChange={(e) => setEditedAccountBalance(e.target.value)}
-          />
-          <br />
+
+          <p className="changePwText">Change your password:</p>
 
          <Input
             key="editedPassword"
@@ -83,18 +73,19 @@ const ManageAccounts = (props) => {
 
           {error && <p className="passwordError">{error}</p>}
 
+          <p className="changeEmailText">Change your email address:</p>
 
           <Input
             key="editedEmail"
             label="New Email Address"
             type="email"
             id="editedEmail"
-            value={editedEmail}
+            value={''}
             onChange={(e) => setEditedEmail(e.target.value)}
           />
           <br />
+          <button className="saveChangesButton" type="submit">Save Changes</button>
         </div>
-         <button className="saveChangesButton" type="submit" onClick={handleUpdate}>Save Changes</button>
       </form>
 
       <button className="backToDashboard" onClick={() => navigate('/dashboard')}>Back to Dashboard</button>

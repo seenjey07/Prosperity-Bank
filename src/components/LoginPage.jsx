@@ -58,6 +58,7 @@ const LoginPage = (props) => {
 			</form>
 
 				<h5 className="loginLink">Don't have an account yet? <br /><Link to="/signup">Sign up</Link>!</h5>
+
 		</div>
 	);
 }

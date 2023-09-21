@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import Input from './Input';
 
 const Deposit = (props) => {
-  const { user, depositHistory, setDepositHistory } = props;
+  const { user, depositHistory, setDepositHistory, savedUsers, updateAccountBalance } = props;
   const [depositInput, setDepositInput] = useState('');
   const [depositOption, setDepositOption] = useState('');
   const [error, setError] = useState('');
@@ -20,6 +20,7 @@ const Deposit = (props) => {
         setDepositInput('');
     }
   }, [depositOption]);
+  
   
   const onDepositOptionChange = (e) => {
     setDepositOption(e.target.value);
@@ -48,29 +49,49 @@ const Deposit = (props) => {
     } else if (selectedOption === "Western Union") {
       if (!westernReference || !westernSender || !depositInput) {
         setError('Please fill out all the fields for Western Union deposit.');
-        return;
+        return setError('');
       }
     }
-
+   
     const depositAmount = parseFloat(depositInput);
 
-    if (isNaN(depositAmount) || depositAmount <=0) {
+      if (isNaN(depositAmount) || depositAmount <= 0) {
       setError('Invalid deposit amount');
       return;
     }
 
     const newBalance = user.accountBalance + depositAmount;
     user.accountBalance = newBalance;
-    localStorage.setItem('savedBalance', newBalance.toString());
-    
-    setDepositHistory([...depositHistory, {amount: depositAmount, date: new Date() }]);
-    localStorage.setItem('depositHistory', JSON.stringify([...depositHistory, {amount: depositAmount, date: new Date() }]));
-    
-    setTimeout(() => {
-      alert('Deposit was successful.');
-      navigate('/dashboard');
-      }, 1000);
-  };
+   
+    const userIndex = savedUsers.findIndex((savedUser) => savedUser.username === user.username);
+
+    if (userIndex !== -1) { /*update user's account info with the new balance*/
+          const updatedUsers = [...savedUsers]; 
+          const updatedAccountInfo = {
+            ...updatedUsers[userIndex],
+            accountBalance: newBalance,
+          };
+
+      updatedUsers[userIndex] = updatedAccountInfo;
+
+      localStorage.setItem('savedUsers', JSON.stringify(updatedUsers)); /* update ng bagong array sa localStorage ng user data*/
+      updateAccountBalance(parseFloat(newBalance)); /*update ng UI by calling the account balance function*/
+
+      setDepositHistory([...depositHistory, {Sender: additionalAccountInfo, Amount: depositAmount, Date: new Date() }]); /*update sa deposit history*/
+      localStorage.setItem('depositHistory', JSON.stringify([...depositHistory, {Sender: additionalAccountInfo, Amount: depositAmount, Date: new Date() }])); /*update ng localStorage sa bagong deposit history*/
+      
+      setAdditionalAccountInfo('');
+      setAdditionalNumberInfo('');
+      setWesternReference('');
+      setWesternSender('');
+      setDepositInput('');
+
+      setTimeout(() => {
+        alert('Deposit was successful.');
+        navigate('/dashboard');
+        }, 1000);
+      };
+  }
 
   return (
     <div>
@@ -81,20 +102,19 @@ const Deposit = (props) => {
         <p className="depositInstruction">Choose how you want to deposit to your account:</p> 
         <p className="depositInstruction">Another Bank Account or Western Union.</p>
         <br />
-
-        <select
-          key="depositOption"
-          list="depositOption"
-          id="depositOption"
-          value={depositOption}
-          onChange={onDepositOptionChange}
-          required
-        >
-          <option value=""></option>
-          <option value="Another Bank Account">Another Bank Account</option>
-          <option value="Western Union">Western Union</option>
-        </select>
-        <br />
+            <select
+              key="depositOption"
+              list="depositOption"
+              id="depositOption"
+              value={depositOption}
+              onChange={onDepositOptionChange}
+              required
+            >
+              <option value=""></option>
+              <option value="Another Bank Account">Another Bank Account</option>
+              <option value="Western Union">Western Union</option>
+            </select>
+            <br />
 
           {selectedOption === "Another Bank Account" && (
             <form>
@@ -126,7 +146,7 @@ const Deposit = (props) => {
                 type="number"
                 id="depositInput"
                 value={depositInput}
-                onChange={onDepositInputChange}
+                onChange={onDepositInputChange} /*{(e) => onDepositInputChange(e.target.value)}*/
                 required
               />
               <br />
@@ -175,11 +195,12 @@ const Deposit = (props) => {
 
                   <Input
                     key="depositInput"
-                    label="Enter amount:"
+                    label="Enter amount to deposit:"
                     type="number"
                     id="depositInput"
                     value={depositInput}
-                    onChange={onDepositInputChange}
+                    onChange={(e) => setDepositInput(e.target.value)}
+                    required
                   />
                   <br />
 

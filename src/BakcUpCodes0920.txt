@@ -1,0 +1,422 @@
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import Input from './Input';
+
+const Deposit = (props) => {
+  const { user, /*, depositHistory, setDepositHistory, */setSavedBalance } = props;
+  const [depositInput, setDepositInput] = useState('');
+  const [depositOption, setDepositOption] = useState('');
+  const [error, setError] = useState('');
+  const [selectedOption, setSelectedOption] = useState('');
+  const [additionalAccountInfo, setAdditionalAccountInfo] = useState('');
+  const [additionalNumberInfo, setAdditionalNumberInfo] = useState('');
+  const [westernReference, setWesternReference] = useState('');
+  const [westernSender, setWesternSender] = useState('');
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const savedBalance = localStorage.getItem('savedBalance');
+    if (savedBalance !== null) {
+        setDepositInput('');
+    }
+  }, [depositOption]);
+  
+  const onDepositOptionChange = (e) => {
+    setDepositOption(e.target.value);
+    setSelectedOption(e.target.value);
+  };
+
+  const onDepositInputChange = (e) => setDepositInput(e.target.value);
+  const onAdditionalAccountInfoChange = (e) => setAdditionalAccountInfo(e.target.value);
+  const onAdditionalNumberInfoChange = (e) => setAdditionalNumberInfo(e.target.value);
+  const onWesternReferenceChange = (e) => setWesternReference(e.target.value);
+  const onWesternSenderChange = (e) => setWesternSender(e.target.value);
+
+  const handleDepositSubmitButton = (e) => {
+    e.preventDefault();
+
+    if (!depositOption) {
+      setError('Please choose a deposit option.');
+      return;
+    }
+  
+    if (selectedOption === "Another Bank Account") {
+      if (!additionalAccountInfo || !additionalNumberInfo || !depositInput) {
+        setError('Please fill out all the fields for Another Bank Account deposit.');
+        return;
+      }
+    } else if (selectedOption === "Western Union") {
+      if (!westernReference || !westernSender || !depositInput) {
+        setError('Please fill out all the fields for Western Union deposit.');
+        return;
+      }
+    }
+
+    const depositAmount = parseFloat(depositInput);
+
+    if (isNaN(depositAmount) || depositAmount <=0) {
+      setError('Invalid deposit amount');
+      return;
+    }
+
+    const newBalance = user.accountBalance + depositAmount;
+    // const updatedUser = {
+    //   ...user,
+    //   accountBalance: newBalance,
+    // }
+    // user.accountBalance = newBalance;
+    // TODO: save updatedUser to respective account on localStorage
+    //  localStorage.setItem('savedBalance', newBalance.toString());
+    //setLoggedInUser(updatedUser)
+
+    setSavedBalance(newBalance)  
+
+    // setDepositHistory([...depositHistory, {amount: depositAmount, date: new Date() }]);
+    // localStorage.setItem('depositHistory', JSON.stringify([...depositHistory, {amount: depositAmount, date: new Date() }]));
+    
+
+    setTimeout(() => {
+      alert('Deposit was successful.');
+      navigate('/dashboard');
+      }, 1000);
+  };
+
+  return (
+    <div>
+      <h3 className="depositText">Online Deposit</h3>
+      <h4 className="currentBalance">Your current balance: ₱ {user.accountBalance}</h4>
+
+      <div className="depositContainer">
+        <p className="depositInstruction">Choose how you want to deposit to your account:</p> 
+        <p className="depositInstruction">Another Bank Account or Western Union.</p>
+        <br />
+
+        <select
+          key="depositOption"
+          list="depositOption"
+          id="depositOption"
+          value={depositOption}
+          onChange={onDepositOptionChange}
+          required
+        >
+          <option value=""></option>
+          <option value="Another Bank Account">Another Bank Account</option>
+          <option value="Western Union">Western Union</option>
+        </select>
+        <br />
+
+          {selectedOption === "Another Bank Account" && (
+            <form>
+              <Input
+                key="additionalAccountInfo"
+                label="Account Name:"
+                type="text"
+                id="additionalAccountInfo"
+                value={additionalAccountInfo}
+                onChange={onAdditionalAccountInfoChange}
+                required
+              />
+              <br />
+
+              <Input
+                key="additionalNumberInfo"
+                label="Account Number:" /**Dapat gawan ng function for subtracting sa other account, need din gawan ng option for another account */
+                type="number"
+                id="additionalNumberInfo"
+                value={additionalNumberInfo}
+                onChange={onAdditionalNumberInfoChange}
+                required
+              />
+              <br />
+
+              <Input
+                key="depositInput"
+                label="Enter amount to deposit:"
+                type="number"
+                id="depositInput"
+                value={depositInput}
+                onChange={onDepositInputChange}
+                required
+              />
+              <br />
+
+              {error && <p className="depositError">{error}</p>}
+
+              <h5 className="beforeDepositSubmitText">Before clicking 'Deposit', please review and ensure correct information.</h5> 
+              <button className="depositButton" type="submit" onClick={handleDepositSubmitButton}>Deposit</button> 
+            </form>
+          )}
+
+          {selectedOption === "Western Union" && (
+            <div>
+              <p className="westernUnionMainInstruction">To deposit through Western Union, please follow these guide:</p>
+              <ol>
+                <li className="westernUnionInstructions">The sender goes to a partner branch for the payment and provides your details to the cashier.</li>
+                <li className="westernUnionInstructions">The sender takes note and gives you the reference number provided by the cashier.</li>
+                <li className="westernUnionInstructions">You proceed to receive the money via Western Union on Prosperity Bank Online, input the reference number and receive the funds to your account.</li>
+              </ol>
+              <br />
+
+              <h5 className="westernUnionDeposit">Already have the reference number?</h5>
+              <h5 className="westernUnionDeposit">Enter the following details:</h5>
+              
+              <div>
+                <form>
+                <Input
+                    key="westernSender"
+                    label="Name of Sender:"
+                    type="text"
+                    id="westernSender"
+                    value={westernSender}
+                    onChange={onWesternSenderChange}
+                  />
+                  <br />
+
+                  <Input
+                    key="westernReference"
+                    label="MTCN Code:"
+                    type="text"
+                    id="westernReference"
+                    value={westernReference}
+                    onChange={onWesternReferenceChange}
+                  />
+                  <br />
+
+                  <Input
+                    key="depositInput"
+                    label="Enter amount:"
+                    type="number"
+                    id="depositInput"
+                    value={depositInput}
+                    onChange={onDepositInputChange}
+                  />
+                  <br />
+
+                  {error && <p className="depositError">{error}</p>}
+
+                  <h5 className="beforeDepositSubmitText">Before clicking 'Deposit', please review and ensure correct information.</h5> 
+                  <button className="depositButton" type="submit" onClick={handleDepositSubmitButton}>Deposit</button>
+
+                </form>
+              </div>
+            </div>
+          )}
+      </div>
+        <br />  
+        <button className="backToDashboard" onClick={() => navigate('/dashboard')}>Return to Dashboard</button>
+    </div>
+  )
+}
+
+export default Deposit;
+
+
+
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import Input from './Input';
+
+const ManageAccounts = (props) => {
+  const { user, updateAccountBalance } = props;
+  const [editedPassword, setEditedPassword] = useState('');
+  const [editedConfirmPassword, setEditedConfirmPassword] = useState('');
+  const [editedEmail, setEditedEmail] = useState(user.email);
+  const [editedAccountBalance, setEditedAccountBalance] = useState(user.accountBalance);
+  const navigate = useNavigate();
+  const [error, setError] = useState('');
+
+    const handleUpdate = (e) => {
+      e.preventDefault();
+
+      if (editedPassword !== editedConfirmPassword) {
+        setEditedPassword('');
+			  setEditedConfirmPassword('');
+			  setError('Passwords do not match');
+        return;
+      }
+
+      const savedUsers = JSON.parse(localStorage.getItem('savedUsers'));
+		
+      const userIndex = savedUsers.findIndex((savedUser) => savedUser.username === user.username);
+  
+      if (userIndex !== -1) { /*irereturn ang -1 kung hindi magkakaroon ng match yung username, meaning non-existent sa array yung username*/
+          const updatedAccountInfo = {
+            ...savedUsers[userIndex],
+            accountBalance: parseFloat(editedAccountBalance),
+            password: editedPassword || savedUsers[userIndex].password,
+            email: editedEmail || savedUsers[userIndex].email,
+          };
+
+      savedUsers[userIndex] = updatedAccountInfo;
+      
+		  localStorage.setItem('savedUsers', JSON.stringify(savedUsers));
+      updateAccountBalance(parseFloat(editedAccountBalance));
+
+      setTimeout(() => {
+        setError('');
+        alert('Account information succesfully updated. Please login again.');
+        navigate('/login');
+      }, 1000);
+    }
+	};
+
+  return (
+    <div>
+      <h3 className="manageAccountText">Manage Your Account Information</h3>
+      <form className="manageAccountContainer">
+        <div> 
+          <Input
+              key="editedAccountBalance"
+              label="New Account Balance"
+              type="number"
+              id="editedAccountBalance"
+              value={editedAccountBalance}
+              onChange={(e) => setEditedAccountBalance(e.target.value)}
+          />
+          <br />
+
+         <Input
+            key="editedPassword"
+            label="New Password"
+            type="password"
+            id="editedPassword"
+            value={editedPassword}
+            onChange={(e) => setEditedPassword(e.target.value)}
+          />
+          <br />
+
+          <Input
+            key="editedConfirmPassword"
+            label="Confirm New Password"
+            type="password"
+            id="editedConfirmPassword"
+            value={editedConfirmPassword}
+            onChange={(e) => setEditedConfirmPassword(e.target.value)}
+          />
+          <br />
+
+          {error && <p className="passwordError">{error}</p>}
+
+
+          <Input
+            key="editedEmail"
+            label="New Email Address"
+            type="email"
+            id="editedEmail"
+            value={editedEmail}
+            onChange={(e) => setEditedEmail(e.target.value)}
+          />
+          <br />
+        </div>
+         <button className="saveChangesButton" type="submit" onClick={handleUpdate}>Save Changes</button>
+      </form>
+
+      <button className="backToDashboard" onClick={() => navigate('/dashboard')}>Back to Dashboard</button>
+    </div>
+  )
+}
+
+export default ManageAccounts;
+
+
+import React, { useEffect, useState } from 'react';
+import './App.css';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import WelcomePage from './components/WelcomePage';
+import LoginPage from './components/LoginPage';
+import SignUpPage from './components/SignUpPage';
+import Dashboard from './components/Dashboard';
+import Deposit from './components/Deposit';
+import ManageAccounts from './components/ManageAccounts';
+import SendMoney from './components/SendMoney';
+import Withdraw from './components/Withdraw';
+import Transactions from './components/Transactions';
+
+function App() {
+  const [loggedInUser, setLoggedInUser] = useState(null);
+  const [registeredUsers, setRegisteredUsers] = useState([]);
+  const [depositHistory, setDepositHistory] = useState([]);
+  const [savedBalance, setSavedBalance] = useState(null);
+  
+  useEffect(() => {
+    const savedUsers = JSON.parse(localStorage.getItem('savedUsers'));
+      if (Array.isArray(savedUsers)) {
+      setRegisteredUsers(savedUsers);
+    }
+  }, []);
+  
+    useEffect(() => {
+      // const savedBalance = parseFloat(localStorage.getItem('savedBalance'));
+      if (typeof savedBalance === 'number') {
+      setLoggedInUser({ ...loggedInUser, accountBalance: savedBalance });
+    }
+  }, [savedBalance])
+
+    // useEffect(() => {
+    //   const savedDepositHistory = JSON.parse(localStorage.getItem('depositHistory'));
+    //   if (Array.isArray(savedDepositHistory)) {
+    //   setDepositHistory(savedDepositHistory);
+    // }
+    // })
+
+  // , [loggedInUser]); /*pag inaalis yung loggedInUser, hindi nase-save para sa next log-in yung deposits from previous transactions, if nasa loob naman yung loggedInUser, may infinite loop error*/
+
+    const updateAccountBalance = (newBalance) => {
+      setLoggedInUser({ ...loggedInUser, accountBalance: newBalance });
+      localStorage.setItem('savedBalance', newBalance.toString());
+    }
+
+  //     if (Array.isArray(savedUsers) && savedUsers.length > 0) {
+  //       setLoggedInUser(savedUsers[0]);
+  //     }
+
+  //     if (Array.isArray(savedUsers)) {
+  //       setRegisteredUsers(savedUsers);
+  //     }
+
+  //     if (typeof savedBalance === 'number') {
+  //       setLoggedInUser((prevUser) => ({ ...prevUser, accountBalance: savedBalance }));
+  //     }
+
+  //     if (Array.isArray(savedDepositHistory)) {
+  //       setDepositHistory(savedDepositHistory);
+  //     }
+  // }, []);
+
+  //     const updateAccountBalance = (newBalance) => { 
+  //       setLoggedInUser((prevUser) => ({ ...prevUser, accountBalance: newBalance }));
+  //       localStorage.setItem('savedBalance' , newBalance.toString());
+  //     };
+
+  return (
+    <Router>
+      <header className='bankHeaderContainer'>
+        <img className="bankLogo" src="src/assets/BankLogo.jpg" alt="BankLogo" />
+        <h1 className="bankName">Prosperity Bank</h1>
+        <p className="bankTagline">Prosperity Unleashed: Banking with a Vision</p>
+      </header>
+
+        <main className="bankMainContainer">
+          <Routes>
+            <Route path='/' element={<WelcomePage />} />
+            <Route path='/login' element={<LoginPage setLoggedInUser={setLoggedInUser} />} />
+            <Route path='/signup' element={<SignUpPage registeredUsers={registeredUsers}/>} />
+            <Route path='/dashboard' element={<Dashboard user={loggedInUser} depositHistory={depositHistory} setDepositHistory={setDepositHistory} updateAccountBalance={updateAccountBalance} />} />
+            <Route path='/manage-account' element={<ManageAccounts user={loggedInUser} updateAccountBalance={updateAccountBalance} />} />
+            <Route path='/deposit' element={<Deposit user={loggedInUser} depositHistory={depositHistory} setDepositHistory={setDepositHistory} updateAccountBalance={updateAccountBalance} setSavedBalance={setSavedBalance} />} />
+            <Route path='/send-money' element={<SendMoney user={loggedInUser}/>} />
+            <Route path='/withdraw' element={<Withdraw user={loggedInUser}/>} />
+            <Route path='/transactions-history' element={<Transactions user={loggedInUser} depositHistory={depositHistory}/>} />
+          </Routes>
+        </main>
+
+      <footer>
+        <h6>2023 Prosperity Bank</h6>
+      </footer>
+    </Router>
+  )
+}
+
+export default App
+
+

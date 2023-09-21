@@ -15,51 +15,33 @@ function App() {
   const [loggedInUser, setLoggedInUser] = useState(null);
   const [registeredUsers, setRegisteredUsers] = useState([]);
   const [depositHistory, setDepositHistory] = useState([]);
-  
+  const [savedUsers, setSavedUsers] = useState([]);
+ 
   useEffect(() => {
     const savedUsers = JSON.parse(localStorage.getItem('savedUsers'));
-    const savedBalance = parseFloat(localStorage.getItem('savedBalance'));
-    const savedDepositHistory = JSON.parse(localStorage.getItem('depositHistory'));
-
-    if (Array.isArray(savedUsers)) {
+      if (Array.isArray(savedUsers)) {
       setRegisteredUsers(savedUsers);
     }
-
-    if (typeof savedBalance === 'number') {
+  }, []);
+  
+    useEffect(() => {
+      const savedBalance = parseFloat(localStorage.getItem('savedBalance'));
+      if (typeof savedBalance === 'number') {
       setLoggedInUser({ ...loggedInUser, accountBalance: savedBalance });
     }
+  }, []);
 
-    if (Array.isArray(savedDepositHistory)) {
+    useEffect(() => {
+      const savedDepositHistory = JSON.parse(localStorage.getItem('depositHistory'));
+      if (Array.isArray(savedDepositHistory)) {
       setDepositHistory(savedDepositHistory);
     }
-  }, []); /*pag inaalis yung loggedInUser, hindi nase-save para sa next log-in yung deposits from previous transactions, if nasa loob naman yung loggedInUser, may infinite loop error*/
+    }, []);
 
-    const updateAccountBalance = (newBalance) => {
+     const updateAccountBalance = (newBalance) => {
       setLoggedInUser({ ...loggedInUser, accountBalance: newBalance });
       localStorage.setItem('savedBalance', newBalance.toString());
     }
-
-  //     if (Array.isArray(savedUsers) && savedUsers.length > 0) {
-  //       setLoggedInUser(savedUsers[0]);
-  //     }
-
-  //     if (Array.isArray(savedUsers)) {
-  //       setRegisteredUsers(savedUsers);
-  //     }
-
-  //     if (typeof savedBalance === 'number') {
-  //       setLoggedInUser((prevUser) => ({ ...prevUser, accountBalance: savedBalance }));
-  //     }
-
-  //     if (Array.isArray(savedDepositHistory)) {
-  //       setDepositHistory(savedDepositHistory);
-  //     }
-  // }, []);
-
-  //     const updateAccountBalance = (newBalance) => { 
-  //       setLoggedInUser((prevUser) => ({ ...prevUser, accountBalance: newBalance }));
-  //       localStorage.setItem('savedBalance' , newBalance.toString());
-  //     };
 
   return (
     <Router>
@@ -75,8 +57,8 @@ function App() {
             <Route path='/login' element={<LoginPage setLoggedInUser={setLoggedInUser} />} />
             <Route path='/signup' element={<SignUpPage registeredUsers={registeredUsers}/>} />
             <Route path='/dashboard' element={<Dashboard user={loggedInUser} depositHistory={depositHistory} setDepositHistory={setDepositHistory} updateAccountBalance={updateAccountBalance} />} />
-            <Route path='/manage-account' element={<ManageAccounts user={loggedInUser} updateAccountBalance={updateAccountBalance} />} />
-            <Route path='/deposit' element={<Deposit user={loggedInUser} depositHistory={depositHistory} setDepositHistory={setDepositHistory} updateAccountBalance={updateAccountBalance} />} />
+            <Route path='/manage-account' element={<ManageAccounts user={loggedInUser} />} />
+            <Route path='/deposit' element={<Deposit user={loggedInUser} depositHistory={depositHistory} setDepositHistory={setDepositHistory} savedUsers={registeredUsers} updateAccountBalance={updateAccountBalance} />} />
             <Route path='/send-money' element={<SendMoney user={loggedInUser}/>} />
             <Route path='/withdraw' element={<Withdraw user={loggedInUser}/>} />
             <Route path='/transactions-history' element={<Transactions user={loggedInUser} depositHistory={depositHistory}/>} />
