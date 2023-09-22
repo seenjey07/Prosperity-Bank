@@ -12,6 +12,10 @@ const LoginPage = (props) => {
 	const onUsernameChange = (e) => setUsername(e.target.value);
 	const onPasswordChange = (e) => setPassword(e.target.value);
 
+	const clearError = () => {
+		setError('');
+	}
+
 	const handleLogin = (e) => {
 		e.preventDefault();
 
@@ -37,8 +41,10 @@ const LoginPage = (props) => {
 					label="Username"
 					type="text"
 					value={username}
-					onChange={onUsernameChange}
-					required
+					onChange={(e) => { 
+						setUsername(e.target.value);
+						clearError();
+					}}
 				/> 
 				<br />
 
@@ -47,8 +53,10 @@ const LoginPage = (props) => {
 					label="Password"
 					type="password"
 					value={password}
-					onChange={onPasswordChange}
-					required
+					onChange={(e) => { 
+						setPassword(e.target.value);
+						clearError();
+					}}
 				/> 
 				<br />
 

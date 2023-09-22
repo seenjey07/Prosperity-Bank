@@ -1,9 +1,14 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import Input from './Input';
 
 const Withdraw = (props) => {
-  const { user } = props;
-  const navigate = useNavigate
+  const { user, widthrawHistory, setWithdrawHistory, savedUsers, updateAccountBalance } = props;
+  const [error, setError] = useState('');
+  const navigate = useNavigate();
+  const [withDrawOption, setWithdrawOption] = useState('');
+  const [withdrawInput, setWithdrawInput] = useState('');
+
 
   return (
     <div className="withdrawHeader">

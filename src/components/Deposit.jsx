@@ -4,23 +4,26 @@ import Input from './Input';
 
 const Deposit = (props) => {
   const { user, depositHistory, setDepositHistory, savedUsers, updateAccountBalance } = props;
-  const [depositInput, setDepositInput] = useState('');
   const [depositOption, setDepositOption] = useState('');
-  const [error, setError] = useState('');
+  const [depositInput, setDepositInput] = useState('');
   const [selectedOption, setSelectedOption] = useState('');
-  const [additionalAccountInfo, setAdditionalAccountInfo] = useState('');
-  const [additionalNumberInfo, setAdditionalNumberInfo] = useState('');
+  const [depositorName, setDepositorName] = useState('');
+  const [depositorAccountNumber, setDepositorAccountNumber] = useState('');
   const [westernReference, setWesternReference] = useState('');
-  const [westernSender, setWesternSender] = useState('');
   const navigate = useNavigate();
+  const [error, setError] = useState('');
 
   useEffect(() => {
-    const savedBalance = localStorage.getItem('savedBalance');
+    const savedBalance = localStorage.getItem('savedUser'); /*Tinanggal ko na yung hiwalay na localStorage for savedBalance*/
     if (savedBalance !== null) {
         setDepositInput('');
     }
   }, [depositOption]);
   
+  useEffect(() => {
+    setError('');
+  }, [selectedOption]);
+
   
   const onDepositOptionChange = (e) => {
     setDepositOption(e.target.value);
@@ -28,36 +31,30 @@ const Deposit = (props) => {
   };
 
   const onDepositInputChange = (e) => setDepositInput(e.target.value);
-  const onAdditionalAccountInfoChange = (e) => setAdditionalAccountInfo(e.target.value);
-  const onAdditionalNumberInfoChange = (e) => setAdditionalNumberInfo(e.target.value);
+  const onDepositorNameChange = (e) => setDepositorName(e.target.value);
+  const onDepositorAccountNumberChange = (e) => setDepositorAccountNumber(e.target.value);
   const onWesternReferenceChange = (e) => setWesternReference(e.target.value);
-  const onWesternSenderChange = (e) => setWesternSender(e.target.value);
-
+ 
   const handleDepositSubmitButton = (e) => {
     e.preventDefault();
 
-    if (!depositOption) {
-      setError('Please choose a deposit option.');
-      return;
-    }
-  
-    if (selectedOption === "Another Bank Account") {
-      if (!additionalAccountInfo || !additionalNumberInfo || !depositInput) {
-        setError('Please fill out all the fields for Another Bank Account deposit.');
-        return;
-      }
-    } else if (selectedOption === "Western Union") {
-      if (!westernReference || !westernSender || !depositInput) {
-        setError('Please fill out all the fields for Western Union deposit.');
-        return setError('');
-      }
-    }
-   
+      if (selectedOption === "Another Bank Account") {
+        if (!depositorName || !depositorAccountNumber || !depositInput) {
+          setError('Please fill out all the fields for Another Bank Account deposit.');
+          return;
+          } 
+      } else if (selectedOption === "Western Union") {
+        if (!depositorName || !westernReference || !depositInput) {
+           setError('Please fill out all the fields for Western Union deposit.');
+           return;
+        } 
+    }     
+
     const depositAmount = parseFloat(depositInput);
 
       if (isNaN(depositAmount) || depositAmount <= 0) {
-      setError('Invalid deposit amount');
-      return;
+        setError('Invalid deposit amount');
+        return;
     }
 
     const newBalance = user.accountBalance + depositAmount;
@@ -77,20 +74,19 @@ const Deposit = (props) => {
       localStorage.setItem('savedUsers', JSON.stringify(updatedUsers)); /* update ng bagong array sa localStorage ng user data*/
       updateAccountBalance(parseFloat(newBalance)); /*update ng UI by calling the account balance function*/
 
-      setDepositHistory([...depositHistory, {Sender: additionalAccountInfo, Amount: depositAmount, Date: new Date() }]); /*update sa deposit history*/
-      localStorage.setItem('depositHistory', JSON.stringify([...depositHistory, {Sender: additionalAccountInfo, Amount: depositAmount, Date: new Date() }])); /*update ng localStorage sa bagong deposit history*/
+      setDepositHistory([...depositHistory, {Sender: depositorName, Transaction: "Deposit", Amount: depositAmount, Date: new Date() }]); /*update sa deposit history*/
+      localStorage.setItem('depositHistory', JSON.stringify([...depositHistory, {Sender: depositorName, Transaction: "Deposit", Amount: depositAmount, Date: new Date() }])); /*update ng localStorage sa bagong deposit history*/
       
-      setAdditionalAccountInfo('');
-      setAdditionalNumberInfo('');
+      setDepositorName('');
+      setDepositorAccountNumber('');
       setWesternReference('');
-      setWesternSender('');
       setDepositInput('');
 
       setTimeout(() => {
         alert('Deposit was successful.');
         navigate('/dashboard');
         }, 1000);
-      };
+    };
   }
 
   return (
@@ -104,7 +100,6 @@ const Deposit = (props) => {
         <br />
             <select
               key="depositOption"
-              list="depositOption"
               id="depositOption"
               value={depositOption}
               onChange={onDepositOptionChange}
@@ -119,23 +114,23 @@ const Deposit = (props) => {
           {selectedOption === "Another Bank Account" && (
             <form>
               <Input
-                key="additionalAccountInfo"
+                key="depositorName"
                 label="Account Name:"
                 type="text"
-                id="additionalAccountInfo"
-                value={additionalAccountInfo}
-                onChange={onAdditionalAccountInfoChange}
+                id="depositorName"
+                value={depositorName}
+                onChange={onDepositorNameChange}
                 required
               />
               <br />
 
               <Input
-                key="additionalNumberInfo"
+                key="depositorAccountNumber"
                 label="Account Number:" /**Dapat gawan ng function for subtracting sa other account, need din gawan ng option for another account */
                 type="number"
-                id="additionalNumberInfo"
-                value={additionalNumberInfo}
-                onChange={onAdditionalNumberInfoChange}
+                id="depositorAccountNumber"
+                value={depositorAccountNumber}
+                onChange={onDepositorAccountNumberChange}
                 required
               />
               <br />
@@ -146,7 +141,7 @@ const Deposit = (props) => {
                 type="number"
                 id="depositInput"
                 value={depositInput}
-                onChange={onDepositInputChange} /*{(e) => onDepositInputChange(e.target.value)}*/
+                onChange={(e) => setDepositInput(e.target.value)}
                 required
               />
               <br />
@@ -174,12 +169,12 @@ const Deposit = (props) => {
               <div>
                 <form>
                 <Input
-                    key="westernSender"
+                    key="depositorName"
                     label="Name of Sender:"
                     type="text"
-                    id="westernSender"
-                    value={westernSender}
-                    onChange={onWesternSenderChange}
+                    id="depositorName"
+                    value={depositorName}
+                    onChange={onDepositorNameChange}
                   />
                   <br />
 

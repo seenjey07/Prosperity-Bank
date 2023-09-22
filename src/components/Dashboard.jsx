@@ -1,13 +1,10 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-// import ExpensesTable from './ExpensesTable';
+
 
 const Dashboard = (props) => {
 	const { user } = props;
 	const navigate = useNavigate();
-// const data = [
-// 	{ name: 'Expense Name', cost: cost, actions: ''}
-// ]
 
 	const handleManageAccountButton = (e) => { 
 		navigate('/manage-account');
@@ -48,7 +45,7 @@ const Dashboard = (props) => {
 					</section>
 					<section className="expensesSection">
 						<p className="expenses">Expenses</p>
-						{/* <ExpensesTable data={data} />  not sure if tama bang i-table format or not */}
+						{/* Insert dito yung sa transaction history container nd content*/}
 						<button className="addExpense" type="button">Add Expense</button>	
 					</section>
 					<Link to="/" className="logoutLinkInDashboard">Logout</Link>

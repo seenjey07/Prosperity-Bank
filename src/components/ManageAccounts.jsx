@@ -10,6 +10,10 @@ const { user } = props;
   const navigate = useNavigate();
   const [error, setError] = useState('');
 
+  const clearError = () => {
+		setError('');
+	}
+
     const handleUpdate = (e) => {
       e.preventDefault();
 
@@ -17,6 +21,11 @@ const { user } = props;
         setEditedPassword('');
 			  setEditedConfirmPassword('');
 			  setError('Passwords do not match');
+        return;
+      }
+
+      if (!editedPassword || !editedEmail) {
+        setError('Invalid account update. Please choose an information to update.')
         return;
       }
 
@@ -48,7 +57,7 @@ const { user } = props;
       <h3 className="manageAccountText">Manage Your Account Information</h3>
       <form className="manageAccountContainer" onSubmit={handleUpdate}>
         <div> 
-
+          <div className="changePwContainer">
           <p className="changePwText">Change your password:</p>
 
          <Input
@@ -57,7 +66,10 @@ const { user } = props;
             type="password"
             id="editedPassword"
             value={editedPassword}
-            onChange={(e) => setEditedPassword(e.target.value)}
+            onChange={(e) => { 
+              setEditedPassword(e.target.value);
+              clearError();
+            }}
           />
           <br />
 
@@ -67,12 +79,14 @@ const { user } = props;
             type="password"
             id="editedConfirmPassword"
             value={editedConfirmPassword}
-            onChange={(e) => setEditedConfirmPassword(e.target.value)}
+            onChange={(e) => { 
+              setEditedConfirmPassword(e.target.value);
+              clearError();
+            }}
           />
-          <br />
+        </div>
 
-          {error && <p className="passwordError">{error}</p>}
-
+        <div className="changeEmailContainer">
           <p className="changeEmailText">Change your email address:</p>
 
           <Input
@@ -81,9 +95,15 @@ const { user } = props;
             type="email"
             id="editedEmail"
             value={''}
-            onChange={(e) => setEditedEmail(e.target.value)}
+            onChange={(e) => { 
+              setEditedEmail(e.target.value);
+              clearError();
+            }}
           />
-          <br />
+        </div>
+
+          {error && <p className="manageAccountError">{error}</p>}
+
           <button className="saveChangesButton" type="submit">Save Changes</button>
         </div>
       </form>

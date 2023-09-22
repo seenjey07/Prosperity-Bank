@@ -27,6 +27,10 @@ const SignUpPage = () => {
 	const onConfirmPasswordChange = (e) => setConfirmPassword(e.target.value);
 	const onEmailChange = (e) => setEmail(e.target.value);
 	
+  const clearError = () => {
+		setError('');
+	}
+
 	const handleRegisterButton = (e) => {
 		e.preventDefault();
 
@@ -80,8 +84,11 @@ const SignUpPage = () => {
 	
 		localStorage.setItem('savedUsers', JSON.stringify(updatedUsers));
 		setError('');
-		alert('Account succesfully created.');
-		navigate('/login');
+
+		setTimeout(() => {
+			alert('Account succesfully created.');
+			navigate('/login');
+		}, 1000);
 	};
 
 	return (
@@ -97,8 +104,10 @@ const SignUpPage = () => {
 						type="text"
 						id="surname"
 						value={surname} 
-						onChange={onSurnameChange}
-						required 
+						onChange={(e) => { 
+							setSurname(e.target.value);
+							clearError();
+						}}
 					/> 
 					<br />
 				
@@ -108,8 +117,10 @@ const SignUpPage = () => {
 						type="text"
 						id="firstName"
 						value={firstName}
-						onChange={onFirstNameChange}
-						required
+						onChange={(e) => { 
+							setFirstName(e.target.value);
+							clearError();
+						}}
 					/> 
 					<br />
 				
@@ -119,8 +130,10 @@ const SignUpPage = () => {
 						type="text"
 						id="middleName"
 						value={middleName}
-						onChange={onMiddleNameChange}
-						required
+						onChange={(e) => { 
+							setMiddleName(e.target.value);
+							clearError();
+						}}
 					/> 
 					<br />
 
@@ -130,8 +143,10 @@ const SignUpPage = () => {
 						type="number"
 						id="accountNumber"
 						value={accountNumber}
-						onChange={onAccountNumberChange}
-						required
+						onChange={(e) => { 
+							setAccountNumber(e.target.value);
+							clearError();
+						}}
 					/>
 					<br />
 
@@ -141,8 +156,10 @@ const SignUpPage = () => {
 						type="number"
 						id="accountBalance"
 						value={accountBalance}
-						onChange={onAccountBalanceChange}
-						required
+						onChange={(e) => { 
+							setAccountBalance(e.target.value);
+							clearError();
+						}}
 					/>
 					<br />
 
@@ -152,8 +169,10 @@ const SignUpPage = () => {
 						list="cardTypes"
 						id="cardType"
 						value={cardType}
-						onChange={onCardTypeChange}
-						required
+						onChange={(e) => { 
+							setCardType(e.target.value);
+							clearError();
+						}}
 					/>
 					<datalist id="cardTypes">
 						<option value="Visa" />
@@ -171,8 +190,10 @@ const SignUpPage = () => {
 						type="text"
 						id="username"
 						value={username}
-						onChange={onUsernameChange}
-						required
+						onChange={(e) => { 
+							setUsername(e.target.value);
+							clearError();
+						}}
 					/>
 					<br />
 
@@ -182,8 +203,10 @@ const SignUpPage = () => {
 						type="password"
 						id="password"
 						value={password}
-						onChange={onPasswordChange}
-						required
+						onChange={(e) => { 
+							setPassword(e.target.value);
+							clearError();
+						}}
 					/>
 					<br />
 
@@ -193,8 +216,10 @@ const SignUpPage = () => {
 						type="password"
 						id="confirmPassword"
 						value={confirmPassword}
-						onChange={onConfirmPasswordChange}
-						required
+						onChange={(e) => { 
+							setConfirmPassword(e.target.value);
+							clearError();
+						}}
 					/>
 					<br />
 
@@ -204,8 +229,10 @@ const SignUpPage = () => {
 						type="email"
 						id="email"
 						value={email}
-						onChange={onEmailChange}
-						required 
+						onChange={(e) => { 
+							setEmail(e.target.value);
+							clearError();
+						}}
 					/>
 					<br /><br />
 
@@ -213,7 +240,7 @@ const SignUpPage = () => {
 						<img className="cartoonWithCard" src="src/assets/ManWithCard.png" alt="cartoonWithCard" />
 					</div>
 
-					{error && <p className="passwordError">{error}</p>}
+					{error && <p className="registrationError">{error}</p>}
 
 					<h5 className="beforeSubmitText">Before clicking 'Register', please review and ensure correct information in the enrollment details. <br /><br />
 						<button className="registerButton" type="submit" onClick={handleRegisterButton}>Register</button> 

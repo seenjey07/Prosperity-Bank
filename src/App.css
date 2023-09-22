@@ -123,32 +123,28 @@ ul {
   align-items: center;
 }
 
-.loginButton, .registerButton, .depositButton, .saveChangesButton, .backToDashboard, .deposit, .sendMoney,.withdraw, .transactions, .manageAccountButton, .addExpense {
+.loginButton, .registerButton, .depositButton, .saveChangesButton, .backToDashboard, .deposit, .sendMoney, .withdraw, .transactions, .manageAccountButton, .addExpense {
   border: transparent;
   border-radius: 7px 0 7px 0;
   background-color:rgb(24, 207, 198);
   font-size: 9.5pt;
   font-family: 'Cambria';
   font-weight: bold;
-  margin: 0;
+  margin: 10px auto;
   padding: 5px;
   cursor: pointer;
 }
 
 .loginError {
-  color: brown;
-  font-weight: bold;
-  margin: 10px 10px 20px 10px;
-  padding: 10px 10px 10px 10px;
-  background-color: blanchedalmond;
-  border-radius: 0 13px 0 13px;
-  font-size: 10pt;
+  margin: 0 10px 20px 10px;
+  padding: 10px;
 }
 
-.passwordError, .depositError {
+.registrationError, .loginError, .manageAccountError, .depositError {
   color: brown;
   font-weight: bold;
-  font-size: 9pt;
+  font-size: 10pt;
+  margin: 10px;
 }
 
 .loginLink, .haveAccount {
@@ -189,9 +185,9 @@ ul {
 
 /* Dashboard */
 
-.accountActionsSection, .expensesSection, .depositContainer, .manageAccountContainer {
+.accountActionsSection, .expensesSection, .manageAccountContainer, .depositContainer, .sendMoneyContainer {
   border-radius: 10px;
-  border: 1px solid gray; 
+  border: 2px double rgb(19, 114, 82); 
   margin: 35px 15px 15px 15px;
   padding: 9px;
   font-family: 'Trebuchet MS';
@@ -199,10 +195,11 @@ ul {
 }
 
 .manageAccountContainer {
-  margin: 20px 15px 35px 15px;
+  margin: 40px 15px 15px 15px;
+  padding: 10px;
 }
 
-.depositContainer {
+.depositContainer, .sendMoneyContainer {
   padding: 7px 7px 15px 7px;
 }
 
@@ -304,6 +301,11 @@ ul {
   grid-area: addExpense;
 }
 
+
+.backToDashboard {
+  margin: 20px auto;
+}
+
 /*Deposit Page*/
 .depositInstruction {
   font-size: 12pt;
@@ -323,17 +325,17 @@ margin: 10px 15px 10px 15px;
   font-weight: normal;
 }
 
-.beforeDepositSubmitText {
+.beforeDashboardTransactionSubmitText {
   font-size: 11pt;
   margin: 30px 10px 10px 10px;
 }
 
-.depositButton {
+.dashboardTransactionsSubmitButton {
   margin: 15px 0 0 0;
 }
 
 .saveChangesButton {
-  margin: 45px 20px 10px 20px;
+  margin: 20px 20px 10px 20px;
 }
 
 .westernUnionMainInstruction {
@@ -355,3 +357,18 @@ margin: 10px 15px 10px 15px;
   font-weight: bold;
   padding: 4px;
 }
+
+/*Manage Account*/
+
+.changePwContainer {
+  margin: 0 15px 0 15px;
+  padding: 9px 9px 25px 9px;
+  border-top: 3px solid white;
+  border-bottom: 3px solid white;
+}
+
+.changeEmailContainer {
+  margin: 0 15px 25px 15px;
+  padding: 9px 9px 25px 9px;
+  border-bottom: 3px solid white;
+} 

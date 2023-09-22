@@ -14,33 +14,50 @@ import Transactions from './components/Transactions';
 function App() {
   const [loggedInUser, setLoggedInUser] = useState(null);
   const [registeredUsers, setRegisteredUsers] = useState([]);
-  const [depositHistory, setDepositHistory] = useState([]);
   const [savedUsers, setSavedUsers] = useState([]);
+  const [depositHistory, setDepositHistory] = useState([]);
+  const [withdrawHistory, setWithdrawHistory] = useState([]);
+  const [sendMoneyHistory, setSendMoneyHistory] = useState([]);
  
   useEffect(() => {
     const savedUsers = JSON.parse(localStorage.getItem('savedUsers'));
       if (Array.isArray(savedUsers)) {
       setRegisteredUsers(savedUsers);
-    }
-  }, []);
+      }
+    }, []);
   
-    useEffect(() => {
-      const savedBalance = parseFloat(localStorage.getItem('savedBalance'));
-      if (typeof savedBalance === 'number') {
-      setLoggedInUser({ ...loggedInUser, accountBalance: savedBalance });
-    }
-  }, []);
+    useEffect(() => { /*Tinanggal ko na yung hiwalay na localStorage for savedBalance*/
+      // const savedBalance = parseFloat(localStorage.getItem('savedBalance'));
+      // if (typeof savedBalance === 'number') {
+      if (typeof accountBalance === 'number') {
+      setLoggedInUser({ ...loggedInUser, accountBalance/*, accountBalance: savedBalance*/ });
+      }
+    }, []);
 
     useEffect(() => {
       const savedDepositHistory = JSON.parse(localStorage.getItem('depositHistory'));
       if (Array.isArray(savedDepositHistory)) {
       setDepositHistory(savedDepositHistory);
-    }
+      }
+    }, []);
+
+    useEffect(() => {
+      const savedWithdrawHistory = JSON.parse(localStorage.getItem('withdrawHistory'));
+      if (Array.isArray(savedWithdrawHistory)) {
+      setWithdrawHistory(savedWithdrawHistory);
+      }
+    }, []);
+
+    useEffect(() => {
+      const savedSendMoneyHistory = JSON.parse(localStorage.getItem('sendMoneyHistory'));
+      if (Array.isArray(savedSendMoneyHistory)) {
+      setWithdrawHistory(savedSendMoneyHistory);
+      }
     }, []);
 
      const updateAccountBalance = (newBalance) => {
       setLoggedInUser({ ...loggedInUser, accountBalance: newBalance });
-      localStorage.setItem('savedBalance', newBalance.toString());
+      // localStorage.setItem('savedBalance', newBalance.toString());
     }
 
   return (
@@ -59,8 +76,8 @@ function App() {
             <Route path='/dashboard' element={<Dashboard user={loggedInUser} depositHistory={depositHistory} setDepositHistory={setDepositHistory} updateAccountBalance={updateAccountBalance} />} />
             <Route path='/manage-account' element={<ManageAccounts user={loggedInUser} />} />
             <Route path='/deposit' element={<Deposit user={loggedInUser} depositHistory={depositHistory} setDepositHistory={setDepositHistory} savedUsers={registeredUsers} updateAccountBalance={updateAccountBalance} />} />
-            <Route path='/send-money' element={<SendMoney user={loggedInUser}/>} />
-            <Route path='/withdraw' element={<Withdraw user={loggedInUser}/>} />
+            <Route path='/send-money' element={<SendMoney user={loggedInUser} sendMoneyHistory={sendMoneyHistory} setSendMoneyHistory={setSendMoneyHistory} savedUsers={registeredUsers} updateAccountBalance={updateAccountBalance} />} />
+            <Route path='/withdraw' element={<Withdraw user={loggedInUser} withdrawHistory={withdrawHistory} setWithdrawHistory={setWithdrawHistory} savedUsers={registeredUsers} updateAccountBalance={updateAccountBalance} />} />
             <Route path='/transactions-history' element={<Transactions user={loggedInUser} depositHistory={depositHistory}/>} />
           </Routes>
         </main>

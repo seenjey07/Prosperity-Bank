@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 const Transactions = (props) => {
   const { user } = props;
-  const navigate = useNavigate;
+  const navigate = useNavigate();
   
   return (
     <div className="transactionsHeader">
