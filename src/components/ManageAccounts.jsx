@@ -6,25 +6,25 @@ const ManageAccounts = (props) => {
 const { user } = props;
   const [editedPassword, setEditedPassword] = useState('');
   const [editedConfirmPassword, setEditedConfirmPassword] = useState('');
-  const [editedEmail, setEditedEmail] = useState(user.email);
+  const [editedEmail, setEditedEmail] = useState('');
   const navigate = useNavigate();
   const [error, setError] = useState('');
 
   const clearError = () => {
 		setError('');
-	}
+	};
 
     const handleUpdate = (e) => {
       e.preventDefault();
 
       if (editedPassword !== editedConfirmPassword) {
-        setEditedPassword('');
-			  setEditedConfirmPassword('');
 			  setError('Passwords do not match');
+        setEditedPassword('');
+        setEditedConfirmPassword('');
         return;
       }
 
-      if (!editedPassword || !editedEmail) {
+      if (!editedPassword && !editedEmail) {
         setError('Invalid account update. Please choose an information to update.')
         return;
       }
@@ -44,8 +44,9 @@ const { user } = props;
       
 		  localStorage.setItem('savedUsers', JSON.stringify(savedUsers));
       
+      clearError();
+
       setTimeout(() => {
-        setError('');
         alert('Account information succesfully updated. Please login again.');
         navigate('/login');
       }, 1000);
@@ -68,7 +69,6 @@ const { user } = props;
             value={editedPassword}
             onChange={(e) => { 
               setEditedPassword(e.target.value);
-              clearError();
             }}
           />
           <br />
@@ -81,23 +81,22 @@ const { user } = props;
             value={editedConfirmPassword}
             onChange={(e) => { 
               setEditedConfirmPassword(e.target.value);
-              clearError();
             }}
           />
         </div>
 
         <div className="changeEmailContainer">
           <p className="changeEmailText">Change your email address:</p>
+          <p className="displayCurrentEmail">Account Email Address: {user.email}</p>
 
           <Input
             key="editedEmail"
             label="New Email Address"
             type="email"
             id="editedEmail"
-            value={''}
+            value={editedEmail}
             onChange={(e) => { 
               setEditedEmail(e.target.value);
-              clearError();
             }}
           />
         </div>

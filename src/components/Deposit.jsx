@@ -24,7 +24,6 @@ const Deposit = (props) => {
     setError('');
   }, [selectedOption]);
 
-  
   const onDepositOptionChange = (e) => {
     setDepositOption(e.target.value);
     setSelectedOption(e.target.value);
@@ -74,13 +73,14 @@ const Deposit = (props) => {
       localStorage.setItem('savedUsers', JSON.stringify(updatedUsers)); /* update ng bagong array sa localStorage ng user data*/
       updateAccountBalance(parseFloat(newBalance)); /*update ng UI by calling the account balance function*/
 
-      setDepositHistory([...depositHistory, {Sender: depositorName, Transaction: "Deposit", Amount: depositAmount, Date: new Date() }]); /*update sa deposit history*/
-      localStorage.setItem('depositHistory', JSON.stringify([...depositHistory, {Sender: depositorName, Transaction: "Deposit", Amount: depositAmount, Date: new Date() }])); /*update ng localStorage sa bagong deposit history*/
+      setDepositHistory([...depositHistory, {Sender: depositorName, Transaction: "Deposit", Amount: '₱ ' + depositAmount, Date: new Date() }]); /*update sa deposit history*/
+      localStorage.setItem('depositHistory', JSON.stringify([...depositHistory, {Sender: depositorName, Transaction: "Deposit", Amount: '₱ ' + depositAmount, Date: new Date() }])); /*update ng localStorage sa bagong deposit history*/
       
       setDepositorName('');
       setDepositorAccountNumber('');
       setWesternReference('');
       setDepositInput('');
+      setError('');
 
       setTimeout(() => {
         alert('Deposit was successful.');
@@ -120,7 +120,6 @@ const Deposit = (props) => {
                 id="depositorName"
                 value={depositorName}
                 onChange={onDepositorNameChange}
-                required
               />
               <br />
 
@@ -131,7 +130,6 @@ const Deposit = (props) => {
                 id="depositorAccountNumber"
                 value={depositorAccountNumber}
                 onChange={onDepositorAccountNumberChange}
-                required
               />
               <br />
 
@@ -142,14 +140,13 @@ const Deposit = (props) => {
                 id="depositInput"
                 value={depositInput}
                 onChange={(e) => setDepositInput(e.target.value)}
-                required
               />
               <br />
 
-              {error && <p className="depositError">{error}</p>}
+              {error && <p className="dashboardTransactionsError">{error}</p>}
 
-              <h5 className="beforeDepositSubmitText">Before clicking 'Deposit', please review and ensure correct information.</h5> 
-              <button className="depositButton" type="submit" onClick={handleDepositSubmitButton}>Deposit</button> 
+              <h5 className="beforeDashboardTransactionsSubmitText">Before clicking 'Deposit', please review and ensure correct information.</h5> 
+              <button className="dashboardTransactionsSubmitButton" type="submit" onClick={handleDepositSubmitButton}>Deposit</button> 
             </form>
           )}
 
@@ -195,14 +192,13 @@ const Deposit = (props) => {
                     id="depositInput"
                     value={depositInput}
                     onChange={(e) => setDepositInput(e.target.value)}
-                    required
                   />
                   <br />
 
-                  {error && <p className="depositError">{error}</p>}
+                  {error && <p className="dashboardTransactionsError">{error}</p>}
 
-                  <h5 className="beforeDepositSubmitText">Before clicking 'Deposit', please review and ensure correct information.</h5> 
-                  <button className="depositButton" type="submit" onClick={handleDepositSubmitButton}>Deposit</button>
+                  <h5 className="beforeDashboardTransactionsSubmitText">Before clicking 'Deposit', please review and ensure correct information.</h5> 
+                  <button className="dashboardTransactionsSubmitButton" type="submit" onClick={handleDepositSubmitButton}>Deposit</button>
 
                 </form>
               </div>

@@ -33,11 +33,6 @@ const SendMoney = (props) => {
   const handleSendMoneySubmitButton = (e) => {
     e.preventDefault();
 
-    if (!sendMoneyOptions) {
-      setError('Please choose a purpose for your transfer.')
-      return;
-    } 
-
     if (!receiverName || !receiverAccountNumber || !sendMoneyInput) {
       setError('Please fill out all the fields to make your transfer.')
       return;
@@ -45,7 +40,7 @@ const SendMoney = (props) => {
 
     const sentAmount = parseFloat(sendMoneyInput);
 
-      if (isNaN(sentAmount) || sentAmount < savedBalance) {
+      if (isNaN(sentAmount) || sentAmount > savedBalance) {
         setError('Invalid deposit amount');
         return;
       }
@@ -79,9 +74,10 @@ const SendMoney = (props) => {
 
           localStorage.setItem('sendMoneyHistory', JSON.stringify([...sendMoneyHistory, 
             {
-              Recipient: receiverName + receiverAccountNumber,
+              Recipient: receiverName,
+              'Account Number': receiverAccountNumber,
               Transaction: sendMoneyOptions, 
-              Amount: sentAmount, 
+              Amount: '₱ ' + sentAmount, 
               Date: new Date(), 
             },
           ])
@@ -103,9 +99,9 @@ const SendMoney = (props) => {
       <h3 className="sendMoneyText">Send Money</h3>
       <h4 className="currentBalance">Your current balance: ₱ {user.accountBalance}</h4>
       
-      <div className="sendMoneyContainer"></div>
+      <div className="sendMoneyContainer">
         <p className="sendMoneyInstruction">Select the purpose of transfer:</p>
-        <br />
+          <br />
           <select
             key="sendMoneyOptions"
             id="sendMoneyOptions"
@@ -127,7 +123,7 @@ const SendMoney = (props) => {
                 type="text"
                 id="receiverName"
                 value={receiverName}
-                onChange={onReceiverNameChange}
+                onChange={(e) => setReceiverName(e.target.value)}
                 required
               />
               <br />
@@ -138,7 +134,7 @@ const SendMoney = (props) => {
                 type="number"
                 id="receiverAccountNumber"
                 value={receiverAccountNumber}
-                onChange={onReceiverAccountNumberChange}
+                onChange={(e) => setReceiverAccountNumber(e.target.value)}
                 required
               />
               <br />
@@ -149,16 +145,17 @@ const SendMoney = (props) => {
                 type="number"
                 id="sendMoneyInput"
                 value={sendMoneyInput}
-                onChange={onSendMoneyInputChange}
+                onChange={(e) => setSendMoneyInput(e.target.value)}
                 required
               />
               <br />
 
               {error && <p className="dashboardTransactionsError">{error}</p>}
 
-              <h5 className="beforeDashboardTransactionSubmitText">Before clicking 'Submit', please review and ensure correct information.</h5> 
-              <button className="submitSendMoneyButton" type="submit" onClick={handleSendMoneySubmitButton}>Submit</button> 
+              <h5 className="beforeDashboardTransactionsSubmitText">Before clicking 'Send', please review and ensure correct information.</h5> 
+              <button className="dashboardTransactionsSubmitButton" type="submit" onClick={handleSendMoneySubmitButton}>Send</button> 
             </form>
+       </div>  
 
       <button className="backToDashboard" onClick={() => navigate('/dashboard')}>Return to Dashboard</button>
 

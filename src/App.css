@@ -58,7 +58,7 @@ footer {
 }
 
 /*For input*/
-label {
+label, .displayCurrentEmail {
   font-size: 10pt;
   font-weight: bold;
   padding-right: 5px;
@@ -123,7 +123,7 @@ ul {
   align-items: center;
 }
 
-.loginButton, .registerButton, .depositButton, .saveChangesButton, .backToDashboard, .deposit, .sendMoney, .withdraw, .transactions, .manageAccountButton, .addExpense {
+.loginButton, .registerButton, .dashboardTransactionsSubmitButton, .saveChangesButton, .backToDashboard, .deposit, .sendMoney, .withdraw, .transactions, .manageAccountButton, .addExpense {
   border: transparent;
   border-radius: 7px 0 7px 0;
   background-color:rgb(24, 207, 198);
@@ -140,7 +140,7 @@ ul {
   padding: 10px;
 }
 
-.registrationError, .loginError, .manageAccountError, .depositError {
+.registrationError, .loginError, .manageAccountError, .dashboardTransactionsError {
   color: brown;
   font-weight: bold;
   font-size: 10pt;
@@ -307,7 +307,7 @@ ul {
 }
 
 /*Deposit Page*/
-.depositInstruction {
+.depositInstruction, .sendMoneyInstruction {
   font-size: 12pt;
   margin: 5px 5px 0px 5px;
   padding: 2px;
@@ -325,13 +325,9 @@ margin: 10px 15px 10px 15px;
   font-weight: normal;
 }
 
-.beforeDashboardTransactionSubmitText {
+.beforeDashboardTransactionsSubmitText {
   font-size: 11pt;
   margin: 30px 10px 10px 10px;
-}
-
-.dashboardTransactionsSubmitButton {
-  margin: 15px 0 0 0;
 }
 
 .saveChangesButton {
@@ -372,3 +368,7 @@ margin: 10px 15px 10px 15px;
   padding: 9px 9px 25px 9px;
   border-bottom: 3px solid white;
 } 
+
+.displayCurrentEmail {
+  color: rgb(19, 114, 82);
+}
