@@ -149,8 +149,6 @@ ul {
   cursor: pointer;
 }
 
-.deleteExpenseButton,
-.editExpenseButton,
 .addExpenseSubmit,
 .cancelExpenseSubmit {
   margin: 1px;
@@ -338,15 +336,12 @@ button {
   margin: 5px;
 }
 
-.expensesUnorderedList {
-  display: inline-flex;
-  flex-direction: column;
-  flex-wrap: wrap;
-  justify-content: space-between;
+.even-row {
+  background-color: rgb(255, 255, 255);
 }
 
-.itemList {
-  display: flex;
+.odd-row {
+  background-color: rgb(197, 245, 229);
 }
 
 .deposit {
@@ -461,7 +456,7 @@ button {
 
 /*Withdraw*/
 .withdrawHeader,
-.sendMoneyTransactionsTitleContainer {
+.transactionsDefaultContent {
   text-align: center;
   font-style: bold;
   font-style: italic;
@@ -471,6 +466,10 @@ button {
 }
 
 /*Transactions History*/
+.transactionsDefaultContent {
+  margin: 30px 20px 20px 20px;
+}
+
 .transactionsHistoryHeader {
   margin: 10px 10px 25px 10px;
 }
@@ -491,23 +490,30 @@ button {
   font-style: normal;
 }
 
+.transactionContainer {
+  display: grid;
+}
+
+.transactionContainer,
 .depositsTransactionsContainer,
 .withdrawalTransactionsContainer,
 .sendMoneyTransactionsContainer,
-.expensesTransactionsContainer {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  align-items: center;
+.expensesTransactionsContainer,
+.itemList {
   font-size: 9.5pt;
 }
 
-.withdrawTransactionsContainer,
-.depositsTransactionsContainer {
-  grid-template-columns: repeat(6, 1fr);
+.itemList {
+  font-size: 10.5pt;
 }
 
-.expensesTransactionsContainer {
-  grid-template-columns: repeat(5, 1fr);
+.editExpenseButton,
+.deleteExpenseButton {
+  align-items: end;
+  cursor: pointer;
+  margin: 1px;
+  border-radius: 7px 0 7px 0;
+  background-color: transparent;
 }
 
 .transactionId,

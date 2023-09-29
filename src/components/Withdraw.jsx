@@ -47,13 +47,16 @@ const Withdraw = (props) => {
       return;
     }
 
+    const withdrawInitialStatus = "Pending";
+    const generatedTransactionId = GenerateTransactionId();
+
     setWithdrawHistory([
       ...withdrawHistory,
       {
         Transaction: withdrawOption,
-        "Transaction ID": GenerateTransactionId(7),
+        "Transaction ID": generatedTransactionId,
         Amount: withdrawAmount,
-        Status: "Pending",
+        Status: withdrawInitialStatus,
         Date: new Date(),
       },
     ]);
@@ -64,10 +67,10 @@ const Withdraw = (props) => {
         ...withdrawHistory,
         {
           Transaction: withdrawOption,
-          "Transaction ID": GenerateTransactionId(7),
+          "Transaction ID": generatedTransactionId,
           Amount: withdrawAmount,
           Date: new Date(),
-          Status: "Pending",
+          Status: withdrawInitialStatus,
         },
       ])
     );

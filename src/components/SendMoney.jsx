@@ -73,15 +73,18 @@ const SendMoney = (props) => {
       localStorage.setItem("savedUsers", JSON.stringify(updatedUsers));
       // updateAccountBalance(parseFloat(newBalance));
 
+      const sendMoneyStatus = "Completed";
+      const generatedTransactionId = GenerateTransactionId();
+
       setSendMoneyHistory([
         ...sendMoneyHistory,
         {
           Transaction: sendMoneyOptions,
-          "Transaction ID": GenerateTransactionId(7),
+          "Transaction ID": generatedTransactionId,
           Recipient: receiverName + receiverAccountNumber,
           Amount: "₱ " + sentAmount,
           Date: new Date(),
-          Status: "Completed",
+          Status: sendMoneyStatus,
         },
       ]);
 
@@ -91,12 +94,12 @@ const SendMoney = (props) => {
           ...sendMoneyHistory,
           {
             Transaction: sendMoneyOptions,
-            "Transaction ID": GenerateTransactionId(7),
+            "Transaction ID": generatedTransactionId,
             Recipient: receiverName,
             "Account Number": receiverAccountNumber,
             Amount: "₱ " + sentAmount,
             Date: new Date(),
-            Status: "Completed",
+            Status: sendMoneyStatus,
           },
         ])
       );

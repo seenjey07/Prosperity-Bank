@@ -3,20 +3,19 @@ import { Link, useNavigate } from "react-router-dom";
 import Input from "./Input";
 import GenerateTransactionId from "./GenerateTransactionId";
 
-const Dashboard = (props) => {
-  const { user } = props;
+const Dashboard = ({
+  user,
+  expensesHistory,
+  setExpensesHistory,
+  updateAccountBalance,
+}) => {
   const [error, setError] = useState("");
   const navigate = useNavigate();
   const [showAddExpenseButton, setShowAddExpenseButton] = useState(true);
   const [showExpenseForm, setShowExpenseForm] = useState(false);
   const [expenseItem, setExpenseItem] = useState("");
   const [expensePrice, setExpensePrice] = useState("");
-  const [expensesHistory, setExpensesHistory] = useState([]);
   const [editIndex, setEditIndex] = useState(-1); //indicates no edit
-
-  useEffect(() => {
-    localStorage.setItem("expensesHistory", JSON.stringify(expensesHistory));
-  }, [expensesHistory]);
 
   useEffect(() => {
     setError("");
@@ -69,8 +68,8 @@ const Dashboard = (props) => {
     newExpenses.splice(index, 1);
 
     const newBalance =
-      parseFloat(user.accountBalance) + parseFloat(deletedExpense.price);
-    props.updateAccountBalance(newBalance);
+      parseFloat(user?.accountBalance) + parseFloat(deletedExpense.price);
+    updateAccountBalance(newBalance);
 
     setExpensesHistory(newExpenses);
   };
@@ -82,7 +81,8 @@ const Dashboard = (props) => {
       setError("");
     }
 
-    let newBalance = user.accountBalance;
+    let newBalance = user?.accountBalance;
+    const generatedTransactionId = GenerateTransactionId();
 
     if (expenseItem && expensePrice !== "") {
       if (editIndex !== -1) {
@@ -94,6 +94,12 @@ const Dashboard = (props) => {
         updatedExpenses[editIndex] = {
           item: expenseItem,
           price: newPrice,
+
+          Transaction: "Expense",
+          "Transaction ID": generatedTransactionId,
+          Expense: expenseItem,
+          Amount: "₱ " + newPrice,
+          Date: new Date().toLocaleDateString(),
         };
         setExpensesHistory(updatedExpenses);
       } else {
@@ -102,26 +108,23 @@ const Dashboard = (props) => {
           price: parseFloat(expensePrice),
 
           Transaction: "Expense",
-          "Transaction ID": GenerateTransactionId(5),
+          "Transaction ID": generatedTransactionId,
           Expense: expenseItem,
-          Amount: "₱ " + expensePrice,
-          Date: new Date(),
+          Amount: "₱ " + parseFloat(expensePrice),
+          Date: new Date().toLocaleDateString(),
         };
         newBalance -= parseFloat(expensePrice);
 
-        setExpensesHistory([...expensesHistory, newExpense]);
+        const updatedExpenses = [...expensesHistory, newExpense];
+        setExpensesHistory(updatedExpenses);
 
-        const currentExpenses =
-          JSON.parse(localStorage.getItem("expensesHistory")) || [];
-
-        const updatedExpenses = [...currentExpenses, newExpense];
         localStorage.setItem(
           "expensesHistory",
           JSON.stringify(updatedExpenses)
         );
       }
 
-      props.updateAccountBalance(newBalance);
+      updateAccountBalance(newBalance);
 
       setExpenseItem("");
       setExpensePrice("");
@@ -134,7 +137,7 @@ const Dashboard = (props) => {
   return (
     <>
       <div>
-        <h3 className="welcome">Welcome, {user.username}!</h3>
+        <h3 className="welcome">Welcome, {user?.username}!</h3>
         <button
           className="manageAccountButton"
           type="button"
@@ -144,10 +147,10 @@ const Dashboard = (props) => {
         </button>
         <section className="accountActionsSection">
           <p className="accountBalanceText">Account Balance:</p>
-          <h4 className="accountBalance">₱ {user.accountBalance}</h4>
+          <h4 className="accountBalance">₱ {user?.accountBalance}</h4>
           <p className="accountNumberText">Account Number:</p>
-          <p className="accountNumber">{user.accountNumber}</p>
-          <p className="cardType">{user.cardType}</p>
+          <p className="accountNumber">{user?.accountNumber}</p>
+          <p className="cardType">{user?.cardType}</p>
 
           <button
             className="deposit"
@@ -181,6 +184,48 @@ const Dashboard = (props) => {
 
         <section className="expensesSection">
           <p className="expensesTitle">Expenses</p>
+
+          <table>
+            <thead>
+              <tr className="expensesTransactionsContainer">
+                <th className="transactionId">Transaction ID</th>
+                <th className="forExpenseItem">Expense</th>
+                <th className="forExpenseAmount">Amount</th>
+                <th className="forExpenseDate">Date</th>
+                <th className="forTransactionAction">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {expensesHistory &&
+                expensesHistory.slice(-5).map((expense, index) => (
+                  <tr
+                    className={`itemList ${
+                      index % 2 === 0 ? "even-row" : "odd-row"
+                    }`}
+                    key={expense["Transaction ID"]}
+                  >
+                    <td>{expense["Transaction ID"]}</td>
+                    <td>{expense.item}</td>
+                    <td>{"₱" + expense.price}</td>
+                    <td>{new Date().toLocaleDateString()}</td>
+                    <td>
+                      <button
+                        className="editExpenseButton"
+                        onClick={() => handleEditExpense(index)}
+                      >
+                        Edit
+                      </button>
+                      <button
+                        className="deleteExpenseButton"
+                        onClick={() => handleDeleteExpense(index)}
+                      >
+                        Delete
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+            </tbody>
+          </table>
 
           {showExpenseForm && (
             <div className="expenseForm">
@@ -225,34 +270,6 @@ const Dashboard = (props) => {
               {error && <p className="dashboardTransactionsError">{error}</p>}
             </div>
           )}
-
-          <div className="expensesTransactionsContainer">
-            <p className="transactionId">Transaction ID</p>
-            <p className="forExpenseItem">Expense</p>
-            <p className="forExpenseAmount">Amount</p>
-            <p className="forExpenseDate">Date</p>
-            <p className="forTransactionAction">Action</p>
-          </div>
-
-          <ul className="expensesUnorderedList">
-            {expensesHistory.map((expense, index) => (
-              <li className="itemList" key={index}>
-                {expense.item}: {expense.price}
-                <button
-                  className="editExpenseButton"
-                  onClick={() => handleEditExpense(index)}
-                >
-                  Edit
-                </button>
-                <button
-                  className="deleteExpenseButton"
-                  onClick={() => handleDeleteExpense(index)}
-                >
-                  Delete
-                </button>
-              </li>
-            ))}
-          </ul>
 
           {showAddExpenseButton && (
             <button

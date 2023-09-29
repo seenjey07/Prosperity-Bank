@@ -12,20 +12,40 @@ import Withdraw from "./components/Withdraw";
 import Transactions from "./components/Transactions";
 
 function App() {
-  const [loggedInUser, setLoggedInUser] = useState(null);
-  const [registeredUsers, setRegisteredUsers] = useState([]);
-  const [savedUsers, setSavedUsers] = useState([]);
-  const [depositHistory, setDepositHistory] = useState([]);
-  const [withdrawHistory, setWithdrawHistory] = useState([]);
-  const [sendMoneyHistory, setSendMoneyHistory] = useState([]);
-  const [expensesHistory, setExpensesHistory] = useState([]);
+  const [loggedInUser, setLoggedInUser] = useState(
+    JSON.parse(localStorage.getItem("loggedInUser"))
+  );
+  const [savedUsers, setSavedUsers] = useState(
+    JSON.parse(localStorage.getItem("savedUsers")) || []
+  );
+  const [depositHistory, setDepositHistory] = useState(
+    JSON.parse(localStorage.getItem("depositHistory")) || []
+  );
+  const [withdrawHistory, setWithdrawHistory] = useState(
+    JSON.parse(localStorage.getItem("withdrawHistory")) || []
+  );
+  const [sendMoneyHistory, setSendMoneyHistory] = useState(
+    JSON.parse(localStorage.getItem("sendMoneyHistory")) || []
+  );
+  const [expensesHistory, setExpensesHistory] = useState(
+    JSON.parse(localStorage.getItem("expensesHistory")) || []
+  );
 
   useEffect(() => {
-    const savedUsers = JSON.parse(localStorage.getItem("savedUsers"));
-    if (Array.isArray(savedUsers)) {
-      setRegisteredUsers(savedUsers);
+    localStorage.setItem("loggedInUser", JSON.stringify(loggedInUser));
+    if (loggedInUser) {
+      const uniqueSavedUsers = savedUsers.filter(
+        (user) =>
+          user.username !== loggedInUser.username &&
+          user.password !== loggedInUser.password
+      );
+
+      localStorage.setItem(
+        "savedUsers",
+        JSON.stringify([...uniqueSavedUsers, loggedInUser])
+      );
     }
-  }, []);
+  }, [loggedInUser]);
 
   useEffect(() => {
     if (typeof accountBalance === "number") {
@@ -37,43 +57,12 @@ function App() {
   }, []);
 
   useEffect(() => {
-    const savedDepositHistory = JSON.parse(
-      localStorage.getItem("depositHistory")
-    );
-    if (Array.isArray(savedDepositHistory)) {
-      setDepositHistory(savedDepositHistory);
-    }
-  }, []);
-
-  useEffect(() => {
-    const savedWithdrawHistory = JSON.parse(
-      localStorage.getItem("withdrawHistory")
-    );
-    if (Array.isArray(savedWithdrawHistory)) {
-      setWithdrawHistory(savedWithdrawHistory);
-    }
-  }, []);
-
-  useEffect(() => {
-    const savedSendMoneyHistory = JSON.parse(
-      localStorage.getItem("sendMoneyHistory")
-    );
-    if (Array.isArray(savedSendMoneyHistory)) {
-      setSendMoneyHistory(savedSendMoneyHistory);
-    }
-  }, []);
-
-  useEffect(() => {
-    const savedExpensesHistory = JSON.parse(
-      localStorage.getItem("expensesHistory")
-    );
-    if (Array.isArray(savedExpensesHistory)) {
-      setExpensesHistory(savedExpensesHistory);
-    }
-  }, []);
+    localStorage.setItem("expensesHistory", JSON.stringify(expensesHistory));
+  }, [expensesHistory]);
 
   const updateAccountBalance = (newBalance) => {
     setLoggedInUser({ ...loggedInUser, accountBalance: newBalance });
+    console.log(newBalance);
   };
 
   return (
@@ -99,16 +88,16 @@ function App() {
           />
           <Route
             path="/signup"
-            element={<SignUpPage registeredUsers={registeredUsers} />}
+            element={<SignUpPage savedUsers={savedUsers} />}
           />
           <Route
             path="/dashboard"
             element={
               <Dashboard
                 user={loggedInUser}
-                depositHistory={depositHistory}
-                setDepositHistory={setDepositHistory}
                 updateAccountBalance={updateAccountBalance}
+                expensesHistory={expensesHistory}
+                setExpensesHistory={setExpensesHistory}
               />
             }
           />
@@ -123,7 +112,7 @@ function App() {
                 user={loggedInUser}
                 depositHistory={depositHistory}
                 setDepositHistory={setDepositHistory}
-                savedUsers={registeredUsers}
+                savedUsers={savedUsers}
                 updateAccountBalance={updateAccountBalance}
               />
             }
@@ -135,7 +124,7 @@ function App() {
                 user={loggedInUser}
                 sendMoneyHistory={sendMoneyHistory}
                 setSendMoneyHistory={setSendMoneyHistory}
-                savedUsers={registeredUsers}
+                savedUsers={savedUsers}
                 updateAccountBalance={updateAccountBalance}
               />
             }
@@ -147,7 +136,7 @@ function App() {
                 user={loggedInUser}
                 withdrawHistory={withdrawHistory}
                 setWithdrawHistory={setWithdrawHistory}
-                savedUsers={registeredUsers}
+                savedUsers={savedUsers}
               />
             }
           />
@@ -158,8 +147,10 @@ function App() {
                 user={loggedInUser}
                 depositHistory={depositHistory}
                 withdrawHistory={withdrawHistory}
+                setWithdrawHistory={setWithdrawHistory}
                 sendMoneyHistory={sendMoneyHistory}
                 expensesHistory={expensesHistory}
+                updateAccountBalance={updateAccountBalance}
               />
             }
           />
