@@ -207,7 +207,13 @@ const Dashboard = ({
                     <td>{expense["Transaction ID"]}</td>
                     <td>{expense.item}</td>
                     <td>{"₱" + expense.price}</td>
-                    <td>{new Date().toLocaleDateString()}</td>
+                    <td>
+                      {new Date(expense["Date"]).toLocaleDateString("en", {
+                        month: "long",
+                        day: "numeric",
+                        year: "numeric",
+                      })}
+                    </td>
                     <td>
                       <button
                         className="editExpenseButton"
