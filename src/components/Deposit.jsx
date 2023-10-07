@@ -77,10 +77,11 @@ const Deposit = (props) => {
       return;
     }
 
-    const newBalance = user.accountBalance + depositAmount;
+    const newBalance =
+      parseFloat(user.accountBalance) + parseFloat(depositAmount);
     user.accountBalance = newBalance;
 
-    updateAccountBalance(depositAmount);
+    updateAccountBalance(newBalance);
 
     const userIndex = savedUsers.findIndex(
       (savedUser) => savedUser.username === user.username
