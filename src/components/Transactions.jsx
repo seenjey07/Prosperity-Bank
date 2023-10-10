@@ -41,6 +41,8 @@ const Transactions = ({
     }
   };
 
+  console.log(sendMoneyHistory);
+
   return (
     <div className="transactionsHistoryContainer">
       <h3 className="transactionsHistoryHeader">Transactions History</h3>

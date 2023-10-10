@@ -81,12 +81,15 @@ const SendMoney = (props) => {
         {
           Transaction: sendMoneyOptions,
           "Transaction ID": generatedTransactionId,
-          Recipient: receiverName + receiverAccountNumber,
+          Recipient: receiverName,
+          "Account Number": receiverAccountNumber,
           Amount: "₱ " + sentAmount,
           Date: new Date(),
           Status: sendMoneyStatus,
         },
       ]);
+
+      console.log(sendMoneyHistory);
 
       localStorage.setItem(
         "sendMoneyHistory",
