@@ -70,7 +70,7 @@ function App() {
       <header className="bankHeaderContainer">
         <img
           className="bankLogo"
-          src="src/assets/BankLogo.jpg"
+          src="/src/assets/BankLogo.jpg"
           alt="BankLogo"
         />
         <h1 className="bankName">Prosperity Bank</h1>
@@ -158,7 +158,7 @@ function App() {
       </main>
 
       <footer>
-        <h6>2023 Prosperity Bank</h6>
+        <h6>&copy; {new Date().getFullYear()} Prosperity Bank</h6>
       </footer>
     </Router>
   );
