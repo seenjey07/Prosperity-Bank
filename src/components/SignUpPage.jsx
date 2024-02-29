@@ -251,9 +251,15 @@ const SignUpPage = () => {
         <div>
           <img
             className="cartoonWithCard"
+            src="https://i.ibb.co/DVxtQMM/Man-With-Card.png"
+            alt="Man-With-Card"
+            border="0"
+          />
+          {/* <img
+            className="cartoonWithCard"
             src="src/assets/ManWithCard.png"
             alt="cartoonWithCard"
-          />
+          /> */}
         </div>
 
         {error && <p className="registrationError">{error}</p>}
