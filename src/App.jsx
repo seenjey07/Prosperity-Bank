@@ -70,9 +70,15 @@ function App() {
       <header className="bankHeaderContainer">
         <img
           className="bankLogo"
+          src="https://i.ibb.co/D59sPfC/BankLogo.jpg"
+          alt="BankLogo"
+          border="0"
+        />
+        {/* <img
+          className="bankLogo"
           src="/src/assets/BankLogo.jpg"
           alt="BankLogo"
-        />
+        /> */}
         <h1 className="bankName">Prosperity Bank</h1>
         <p className="bankTagline">
           Prosperity Unleashed: Banking with a Vision
