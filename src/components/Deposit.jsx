@@ -3,15 +3,13 @@ import { useNavigate } from "react-router-dom";
 import Input from "./Input";
 import GenerateTransactionId from "./GenerateTransactionId";
 
-const Deposit = (props) => {
-  const {
-    user,
-    depositHistory,
-    setDepositHistory,
-    savedUsers,
-    updateAccountBalance,
-  } = props;
-
+const Deposit = ({
+  user,
+  depositHistory,
+  setDepositHistory,
+  savedUsers,
+  updateAccountBalance,
+}) => {
   const [depositOption, setDepositOption] = useState("");
   const [depositInput, setDepositInput] = useState("");
   const [selectedOption, setSelectedOption] = useState("");
@@ -77,10 +75,11 @@ const Deposit = (props) => {
       return;
     }
 
-    const newBalance = user.accountBalance + depositAmount;
+    const newBalance =
+      parseFloat(user.accountBalance) + parseFloat(depositAmount);
     user.accountBalance = newBalance;
 
-    updateAccountBalance(depositAmount);
+    updateAccountBalance(newBalance);
 
     const userIndex = savedUsers.findIndex(
       (savedUser) => savedUser.username === user.username
@@ -104,16 +103,19 @@ const Deposit = (props) => {
         parseFloat(newBalance)
       ); /*update ng UI by calling the account balance function*/
 
+      const depositStatus = "Completed";
+      const generatedTransactionId = GenerateTransactionId();
+
       setDepositHistory([
         ...depositHistory,
         {
           Transaction: "Deposit",
-          "Transaction ID": GenerateTransactionId(7),
+          "Transaction ID": generatedTransactionId,
           Channel: depositOption,
           Sender: depositorName,
           Amount: "₱ " + depositAmount,
           Date: new Date(),
-          Status: "Completed",
+          Status: depositStatus,
         },
       ]); /*update sa deposit history*/
       localStorage.setItem(
@@ -122,12 +124,12 @@ const Deposit = (props) => {
           ...depositHistory,
           {
             Transaction: "Deposit",
-            "Transaction ID": GenerateTransactionId(7),
+            "Transaction ID": generatedTransactionId,
             Sender: depositorName,
             Channel: depositOption,
             Amount: "₱ " + depositAmount,
             Date: new Date(),
-            Status: "Completed",
+            Status: depositStatus,
           },
         ])
       ); /*update ng localStorage sa bagong deposit history*/

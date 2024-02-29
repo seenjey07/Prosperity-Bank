@@ -2,8 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Input from "./Input";
 
-const LoginPage = (props) => {
-  const { setLoggedInUser } = props;
+const LoginPage = ({ setLoggedInUser }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
@@ -27,11 +26,11 @@ const LoginPage = (props) => {
         (user) => user.username === username && user.password === password
       )
     ) {
-      setError(null);
+      setError("");
       const loggedInUser = savedUsers.find(
         (user) => user.username === username
       );
-      props.setLoggedInUser(loggedInUser);
+      if (loggedInUser) setLoggedInUser(loggedInUser);
       navigate("/dashboard");
     } else {
       setUsername("");
