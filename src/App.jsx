@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import "./App.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import WelcomePage from "./components/WelcomePage";
@@ -45,12 +45,14 @@ function App() {
         JSON.stringify([...uniqueSavedUsers, loggedInUser])
       );
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loggedInUser]);
 
   useEffect(() => {
     if (typeof accountBalance === "number") {
       setLoggedInUser({
         ...loggedInUser,
+        // eslint-disable-next-line no-undef
         accountBalance,
       });
     }
