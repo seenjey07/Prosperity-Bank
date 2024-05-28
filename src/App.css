@@ -245,6 +245,7 @@ button {
 .transactionsHistoryContainer {
   border-radius: 10px;
   border: 2px double rgb(19, 114, 82);
+  background-color: rgb(132, 255, 249);
   margin: 35px 15px 15px 15px;
   padding: 9px;
   font-family: "Trebuchet MS";
@@ -310,6 +311,7 @@ button {
 .accountNumber,
 .cardType {
   grid-area: accountNumber;
+  font-weight: bold;
   display: flex;
   justify-content: left;
   font-size: 11pt;
@@ -318,6 +320,7 @@ button {
 
 .cardType {
   grid-area: cardType;
+  font-weight: bold;
   justify-content: right;
   margin: 10px 10px 0 0;
 }
@@ -334,6 +337,7 @@ button {
   justify-content: center;
   align-items: center;
   background-color: rgb(24, 207, 198);
+  border: 2px double rgb(19, 114, 82);
 }
 
 .expensesTitle {
