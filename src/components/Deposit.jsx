@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -168,7 +169,7 @@ const Deposit = ({
           key="depositOption"
           id="depositOption"
           value={depositOption}
-          onChange={(e) => onDepositOptionChange(e)}
+          onChange={onDepositOptionChange}
         >
           <option value=""></option>
           <option value="Another Bank Account">Another Bank Account</option>
@@ -184,7 +185,7 @@ const Deposit = ({
               type="text"
               id="depositorName"
               value={depositorName}
-              onChange={(e) => onDepositorNameChange(e)}
+              onChange={onDepositorNameChange}
             />
             <br />
 
@@ -197,7 +198,7 @@ const Deposit = ({
               onChange={(e) => {
                 const inputValue = e.target.value.replace(/\D/g, "");
                 if (inputValue.length <= 18) {
-                  onDepositorAccountNumberChange(inputValue);
+                  setDepositorAccountNumber(inputValue);
                 }
               }}
             />
@@ -212,7 +213,7 @@ const Deposit = ({
               onChange={(e) => {
                 const inputValue = e.target.value.replace(/\D/g, "");
                 if (inputValue.length <= 18) {
-                  onDepositInputChange(inputValue);
+                  setDepositInput(inputValue);
                 }
               }}
             />
@@ -271,7 +272,7 @@ const Deposit = ({
                   type="text"
                   id="depositorName"
                   value={depositorName}
-                  onChange={(e) => onDepositorNameChange(e)}
+                  onChange={onDepositorNameChange}
                 />
                 <br />
 
@@ -281,7 +282,7 @@ const Deposit = ({
                   type="text"
                   id="westernReference"
                   value={westernReference}
-                  onChange={(e) => onWesternReferenceChange(e)}
+                  onChange={onWesternReferenceChange}
                 />
                 <br />
 
@@ -294,7 +295,7 @@ const Deposit = ({
                   onChange={(e) => {
                     const inputValue = e.target.value.replace(/\D/g, "");
                     if (inputValue.length <= 18) {
-                      onDepositInputChange(inputValue);
+                      setDepositInput(inputValue);
                     }
                   }}
                 />
