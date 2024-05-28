@@ -1,5 +1,3 @@
-import React from "react";
-
 function GenerateTransactionId() {
   const characters =
     "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
