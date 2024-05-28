@@ -3,8 +3,6 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100%;
-  height: 100%;
 }
 
 #root {
@@ -12,8 +10,8 @@ body {
   margin: 0 auto;
   padding: 20px;
   font-family: "Trebuchet MS";
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
 }
 
 .cartoonWithCard {
@@ -30,7 +28,6 @@ body {
 }
 
 .bankName {
-  text-align: center;
   color: rgb(18, 167, 167);
   text-shadow: 5px 0 2px rgb(28, 74, 92);
   font-size: 23pt;
@@ -46,24 +43,8 @@ body {
   padding-bottom: 15px;
 }
 
-.bankHeaderContainer {
-  display: flex;
-  flex-direction: column;
-}
-
-.bankMainContainer {
-  display: flex;
-  margin: 20px auto;
-  align-items: center;
-  justify-content: center;
-  background-color: lightseagreen;
-  width: fit-content;
-  border-radius: 50px 0;
-  padding: 20px;
-}
-
 footer {
-  position: fixed;
+  position: relative;
   bottom: 0;
 }
 
@@ -94,6 +75,23 @@ input {
   justify-content: center;
   align-items: center;
   height: fit-content;
+}
+
+.bankHeaderContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.bankMainContainer {
+  display: flex;
+  margin: 20px auto;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(24, 207, 198, 0.959);
+  width: fit-content;
+  height: fit-content;
+  border-radius: 50px 0;
+  padding: 20px;
 }
 
 .welcomeMessage {
