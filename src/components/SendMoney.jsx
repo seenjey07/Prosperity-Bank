@@ -1,4 +1,6 @@
-import React, { useEffect, useState } from "react";
+/* eslint-disable no-unused-vars */
+/* eslint-disable react/prop-types */
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Input from "./Input";
 import GenerateTransactionId from "./GenerateTransactionId";
@@ -186,7 +188,7 @@ const SendMoney = (props) => {
           {error && <p className="dashboardTransactionsError">{error}</p>}
 
           <h5 className="beforeDashboardTransactionsSubmitText">
-            Before clicking 'Send', please review and ensure correct
+            Before clicking &apos;Send&apos;, please review and ensure correct
             information.
           </h5>
           <button

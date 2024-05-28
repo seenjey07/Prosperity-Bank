@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Input from "./Input";
 
@@ -100,6 +100,8 @@ const SignUpPage = () => {
         Please complete the registration form below:
       </h5>
 
+      {error && <p className="registrationError">{error}</p>}
+
       <form className="signUpContainer">
         <Input
           key="surname"
@@ -108,7 +110,7 @@ const SignUpPage = () => {
           id="surname"
           value={surname}
           onChange={(e) => {
-            setSurname(e.target.value);
+            onSurnameChange(e);
             clearError();
           }}
         />
@@ -121,7 +123,7 @@ const SignUpPage = () => {
           id="firstName"
           value={firstName}
           onChange={(e) => {
-            setFirstName(e.target.value);
+            onFirstNameChange(e);
             clearError();
           }}
         />
@@ -134,7 +136,7 @@ const SignUpPage = () => {
           id="middleName"
           value={middleName}
           onChange={(e) => {
-            setMiddleName(e.target.value);
+            onMiddleNameChange(e);
             clearError();
           }}
         />
@@ -149,7 +151,7 @@ const SignUpPage = () => {
           onChange={(e) => {
             const inputValue = e.target.value.replace(/\D/g, "");
             if (inputValue.length <= 18) {
-              setAccountNumber(inputValue);
+              onAccountNumberChange(e);
               clearError();
             }
           }}
@@ -165,7 +167,7 @@ const SignUpPage = () => {
           onChange={(e) => {
             const inputValue = e.target.value.replace(/\D/g, "");
             if (inputValue.length <= 18) {
-              setAccountBalance(inputValue);
+              onAccountBalanceChange(e);
               clearError();
             }
           }}
@@ -179,7 +181,7 @@ const SignUpPage = () => {
           id="cardType"
           value={cardType}
           onChange={(e) => {
-            setCardType(e.target.value);
+            onCardTypeChange(e);
             clearError();
           }}
         />
@@ -202,7 +204,7 @@ const SignUpPage = () => {
           id="username"
           value={username}
           onChange={(e) => {
-            setUsername(e.target.value);
+            onUsernameChange(e);
             clearError();
           }}
         />
@@ -215,7 +217,7 @@ const SignUpPage = () => {
           id="password"
           value={password}
           onChange={(e) => {
-            setPassword(e.target.value);
+            onPasswordChange(e);
             clearError();
           }}
         />
@@ -228,7 +230,7 @@ const SignUpPage = () => {
           id="confirmPassword"
           value={confirmPassword}
           onChange={(e) => {
-            setConfirmPassword(e.target.value);
+            onConfirmPasswordChange(e);
             clearError();
           }}
         />
@@ -241,7 +243,7 @@ const SignUpPage = () => {
           id="email"
           value={email}
           onChange={(e) => {
-            setEmail(e.target.value);
+            onEmailChange(e);
             clearError();
           }}
         />
@@ -262,10 +264,8 @@ const SignUpPage = () => {
           /> */}
         </div>
 
-        {error && <p className="registrationError">{error}</p>}
-
         <h5 className="beforeSubmitText">
-          Before clicking 'Register', please review and ensure correct
+          Before clicking &apos;Register&apos;, please review and ensure correct
           information in the enrollment details. <br />
           <br />
           <button

@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+/* eslint-disable react/prop-types */
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Input from "./Input";
 
@@ -74,6 +75,7 @@ const ManageAccounts = (props) => {
       </div>
 
       <form className="manageAccountContainer" onSubmit={handleUpdate}>
+        {error && <p className="manageAccountError">{error}</p>}
         <div>
           <div className="changePwContainer">
             <p className="changePwText">Change your password:</p>
@@ -122,8 +124,6 @@ const ManageAccounts = (props) => {
               }}
             />
           </div>
-
-          {error && <p className="manageAccountError">{error}</p>}
 
           <button className="saveChangesButton" type="submit">
             Save Changes

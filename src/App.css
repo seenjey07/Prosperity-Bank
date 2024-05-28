@@ -3,23 +3,15 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100%;
-  height: 100%;
 }
 
 #root {
-  background-color: rgb(188, 253, 231);
-  border-radius: 50px 0 50px 0;
   text-align: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  margin: 10px auto;
-  padding: 20px 5px 5px 5px;
+  margin: 0 auto;
+  padding: 20px;
   font-family: "Trebuchet MS";
-  width: 70%;
-  height: 90%;
+  width: 100vw;
+  height: 100vh;
 }
 
 .cartoonWithCard {
@@ -36,7 +28,6 @@ body {
 }
 
 .bankName {
-  text-align: center;
   color: rgb(18, 167, 167);
   text-shadow: 5px 0 2px rgb(28, 74, 92);
   font-size: 23pt;
@@ -53,12 +44,8 @@ body {
 }
 
 footer {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
   position: relative;
-  bottom: 0px;
-  padding: 0 0 0 10px;
+  bottom: 0;
 }
 
 /*For input*/
@@ -88,6 +75,23 @@ input {
   justify-content: center;
   align-items: center;
   height: fit-content;
+}
+
+.bankHeaderContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.bankMainContainer {
+  display: flex;
+  margin: 20px auto;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(24, 207, 198, 0.959);
+  width: fit-content;
+  height: fit-content;
+  border-radius: 50px;
+  padding: 20px;
 }
 
 .welcomeMessage {
@@ -142,9 +146,9 @@ ul {
 .addExpenseSubmit,
 .cancelExpenseSubmit,
 .tab {
-  border: transparent;
+  border: lightgray 2px solid;
   border-radius: 7px 0 7px 0;
-  background-color: rgb(24, 207, 198);
+  background-color: rgb(77, 199, 193);
   font-size: 9.5pt;
   font-family: "Cambria";
   font-weight: bold;
@@ -166,6 +170,7 @@ button {
 }
 
 .loginError {
+  display: flex;
   margin: 0 10px 20px 10px;
   padding: 10px;
 }
@@ -177,7 +182,7 @@ button {
 .withdrawInstructionsNote {
   color: brown;
   font-weight: bold;
-  font-size: 10pt;
+  font-size: 9pt;
   margin: 10px;
 }
 
@@ -240,6 +245,7 @@ button {
 .transactionsHistoryContainer {
   border-radius: 10px;
   border: 2px double rgb(19, 114, 82);
+  background-color: rgb(132, 255, 249);
   margin: 35px 15px 15px 15px;
   padding: 9px;
   font-family: "Trebuchet MS";
@@ -305,6 +311,7 @@ button {
 .accountNumber,
 .cardType {
   grid-area: accountNumber;
+  font-weight: bold;
   display: flex;
   justify-content: left;
   font-size: 11pt;
@@ -313,6 +320,7 @@ button {
 
 .cardType {
   grid-area: cardType;
+  font-weight: bold;
   justify-content: right;
   margin: 10px 10px 0 0;
 }
@@ -329,6 +337,7 @@ button {
   justify-content: center;
   align-items: center;
   background-color: rgb(24, 207, 198);
+  border: 2px double rgb(19, 114, 82);
 }
 
 .expensesTitle {

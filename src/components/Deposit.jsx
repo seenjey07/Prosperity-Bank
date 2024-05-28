@@ -1,4 +1,6 @@
-import React, { useEffect, useState } from "react";
+/* eslint-disable no-unused-vars */
+/* eslint-disable react/prop-types */
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Input from "./Input";
 import GenerateTransactionId from "./GenerateTransactionId";
@@ -220,8 +222,8 @@ const Deposit = ({
             {error && <p className="dashboardTransactionsError">{error}</p>}
 
             <h5 className="beforeDashboardTransactionsSubmitText">
-              Before clicking 'Deposit', please review and ensure correct
-              information.
+              Before clicking &apos;Deposit&apos;, please review and ensure
+              correct information.
             </h5>
             <button
               className="dashboardTransactionsSubmitButton"
@@ -302,8 +304,8 @@ const Deposit = ({
                 {error && <p className="dashboardTransactionsError">{error}</p>}
 
                 <h5 className="beforeDashboardTransactionsSubmitText">
-                  Before clicking 'Deposit', please review and ensure correct
-                  information.
+                  Before clicking &apos;Deposit&apos;, please review and ensure
+                  correct information.
                 </h5>
                 <button
                   className="dashboardTransactionsSubmitButton"
