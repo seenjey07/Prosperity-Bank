@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Input from "./Input";
 
+// eslint-disable-next-line react/prop-types
 const LoginPage = ({ setLoggedInUser }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -35,20 +36,21 @@ const LoginPage = ({ setLoggedInUser }) => {
     } else {
       setUsername("");
       setPassword("");
-      setError("Invalid username or password. Please try again.");
+      setError("Invalid username or password.");
     }
   };
 
   return (
     <div>
       <form className="loginForm" onSubmit={handleLogin}>
+        {error && <p className="loginError">{error}</p>}
         <Input
           key="username"
           label="Username"
           type="text"
           value={username}
           onChange={(e) => {
-            setUsername(e.target.value);
+            onUsernameChange(e);
             clearError();
           }}
         />
@@ -60,13 +62,11 @@ const LoginPage = ({ setLoggedInUser }) => {
           type="password"
           value={password}
           onChange={(e) => {
-            setPassword(e.target.value);
+            onPasswordChange(e);
             clearError();
           }}
         />
         <br />
-
-        {error && <p className="loginError">{error}</p>}
 
         <button className="loginButton" type="submit">
           Login
@@ -74,7 +74,7 @@ const LoginPage = ({ setLoggedInUser }) => {
       </form>
 
       <h5 className="loginLink">
-        Don't have an account yet? <br />
+        Don&apos;t have an account yet? <br />
         <Link to="/signup">Sign up</Link>!
       </h5>
     </div>
