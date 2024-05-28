@@ -146,9 +146,9 @@ ul {
 .addExpenseSubmit,
 .cancelExpenseSubmit,
 .tab {
-  border: transparent;
+  border: lightgray 2px solid;
   border-radius: 7px 0 7px 0;
-  background-color: rgb(24, 207, 198);
+  background-color: rgb(77, 199, 193);
   font-size: 9.5pt;
   font-family: "Cambria";
   font-weight: bold;
@@ -170,6 +170,7 @@ button {
 }
 
 .loginError {
+  display: flex;
   margin: 0 10px 20px 10px;
   padding: 10px;
 }
@@ -181,7 +182,7 @@ button {
 .withdrawInstructionsNote {
   color: brown;
   font-weight: bold;
-  font-size: 10pt;
+  font-size: 9pt;
   margin: 10px;
 }
 
