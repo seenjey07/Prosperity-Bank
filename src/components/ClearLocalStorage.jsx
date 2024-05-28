@@ -1,5 +1,3 @@
-import React from "react";
-
 const ClearLocalStorageButton = () => {
   const handleClearLocalStorage = () => {
     localStorage.clear();
