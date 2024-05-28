@@ -46,6 +46,22 @@ body {
   padding-bottom: 15px;
 }
 
+.bankHeaderContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.bankMainContainer {
+  display: flex;
+  margin: 20px auto;
+  align-items: center;
+  justify-content: center;
+  background-color: lightseagreen;
+  width: fit-content;
+  border-radius: 50px 0;
+  padding: 20px;
+}
+
 footer {
   position: fixed;
   bottom: 0;
