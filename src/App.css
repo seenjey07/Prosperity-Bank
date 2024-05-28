@@ -90,7 +90,7 @@ input {
   background-color: rgba(24, 207, 198, 0.959);
   width: fit-content;
   height: fit-content;
-  border-radius: 50px 0;
+  border-radius: 50px;
   padding: 20px;
 }
 
