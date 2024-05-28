@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+/* eslint-disable react/prop-types */
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Input from "./Input";
 import GenerateTransactionId from "./GenerateTransactionId";
@@ -167,7 +168,7 @@ const Deposit = ({
           key="depositOption"
           id="depositOption"
           value={depositOption}
-          onChange={onDepositOptionChange}
+          onChange={(e) => onDepositOptionChange(e)}
         >
           <option value=""></option>
           <option value="Another Bank Account">Another Bank Account</option>
@@ -183,7 +184,7 @@ const Deposit = ({
               type="text"
               id="depositorName"
               value={depositorName}
-              onChange={onDepositorNameChange}
+              onChange={(e) => onDepositorNameChange(e)}
             />
             <br />
 
@@ -196,7 +197,7 @@ const Deposit = ({
               onChange={(e) => {
                 const inputValue = e.target.value.replace(/\D/g, "");
                 if (inputValue.length <= 18) {
-                  setDepositorAccountNumber(inputValue);
+                  onDepositorAccountNumberChange(inputValue);
                 }
               }}
             />
@@ -211,7 +212,7 @@ const Deposit = ({
               onChange={(e) => {
                 const inputValue = e.target.value.replace(/\D/g, "");
                 if (inputValue.length <= 18) {
-                  setDepositInput(inputValue);
+                  onDepositInputChange(inputValue);
                 }
               }}
             />
@@ -220,8 +221,8 @@ const Deposit = ({
             {error && <p className="dashboardTransactionsError">{error}</p>}
 
             <h5 className="beforeDashboardTransactionsSubmitText">
-              Before clicking 'Deposit', please review and ensure correct
-              information.
+              Before clicking &apos;Deposit&apos;, please review and ensure
+              correct information.
             </h5>
             <button
               className="dashboardTransactionsSubmitButton"
@@ -270,7 +271,7 @@ const Deposit = ({
                   type="text"
                   id="depositorName"
                   value={depositorName}
-                  onChange={onDepositorNameChange}
+                  onChange={(e) => onDepositorNameChange(e)}
                 />
                 <br />
 
@@ -280,7 +281,7 @@ const Deposit = ({
                   type="text"
                   id="westernReference"
                   value={westernReference}
-                  onChange={onWesternReferenceChange}
+                  onChange={(e) => onWesternReferenceChange(e)}
                 />
                 <br />
 
@@ -293,7 +294,7 @@ const Deposit = ({
                   onChange={(e) => {
                     const inputValue = e.target.value.replace(/\D/g, "");
                     if (inputValue.length <= 18) {
-                      setDepositInput(inputValue);
+                      onDepositInputChange(inputValue);
                     }
                   }}
                 />
@@ -302,8 +303,8 @@ const Deposit = ({
                 {error && <p className="dashboardTransactionsError">{error}</p>}
 
                 <h5 className="beforeDashboardTransactionsSubmitText">
-                  Before clicking 'Deposit', please review and ensure correct
-                  information.
+                  Before clicking &apos;Deposit&apos;, please review and ensure
+                  correct information.
                 </h5>
                 <button
                   className="dashboardTransactionsSubmitButton"
