@@ -47,12 +47,8 @@ body {
 }
 
 footer {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  position: relative;
-  bottom: 0px;
-  padding: 0 0 0 10px;
+  position: fixed;
+  bottom: 0;
 }
 
 /*For input*/
