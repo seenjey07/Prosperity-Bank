@@ -1,4 +1,6 @@
-import React, { useEffect, useState } from "react";
+/* eslint-disable no-unused-vars */
+/* eslint-disable react/prop-types */
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Input from "./Input";
 import GenerateTransactionId from "./GenerateTransactionId";
@@ -43,7 +45,7 @@ const Withdraw = (props) => {
     const withdrawAmount = parseFloat(withdrawInput);
 
     if (isNaN(withdrawAmount) || withdrawAmount > user.accountBalance) {
-      setError("Invalid deposit amount");
+      setError("Invalid withdrawal amount");
       return;
     }
 
@@ -105,21 +107,22 @@ const Withdraw = (props) => {
         <div className="withdrawInstructionsContainer">
           <p className="withdrawMainInstruction">Follow these easy steps:</p>
           <p className="withdrawInstructions">
-            1. Select “Cardless Withdrawal” and then “Create New Request” on the
-            drop-downs.
+            1. Select &quot;Cardless Withdrawal&quot; and then &quot;Create New
+            Request&quot; on the drop-downs.
           </p>
           <p className="withdrawInstructions">
             2. Enter the amount to be withdrawn and nominate your 4-digit PIN.
           </p>
           <p className="withdrawInstructions">
-            3. Review that the details are correct, then click “Submit”.
+            3. Review that the details are correct, then click
+            &quot;Submit&quot;.
           </p>
           <p className="withdrawInstructions">
-            4. Proceed to any ATM, choose "Cardless Withdrawal" and enter your
-            4-digit PIN.
+            4. Proceed to any ATM, choose &quot;Cardless Withdrawal&quot; and
+            enter your 4-digit PIN.
           </p>
           <p className="withdrawInstructions">
-            5. Enter the amount to be withdrawn then press “Confirm”.
+            5. Enter the amount to be withdrawn then press &quot;Confirm&quot;.
           </p>
           <p className="withdrawInstructionsNote">
             Note: Unclaimed withdrawal/s will be void after 1 hour.
@@ -185,8 +188,8 @@ const Withdraw = (props) => {
             {error && <p className="dashboardTransactionsError">{error}</p>}
 
             <h5 className="beforeDashboardTransactionsSubmitText">
-              Before clicking 'Withdraw', please review and ensure correct
-              information.
+              Before clicking &apos;Withdraw&apos;, please review and ensure
+              correct information.
             </h5>
             <button
               className="dashboardTransactionsSubmitButton"
